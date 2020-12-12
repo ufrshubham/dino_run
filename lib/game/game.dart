@@ -30,8 +30,9 @@ class DinoGame extends BaseGame {
       rows: 1,
     );
 
-    final idleAnimation =
-        spriteSheet.createAnimation(0, from: 0, to: 3, stepTime: 0.1);
+    // Commenting out for now, as flutter analyze hates unused variables.
+    // final idleAnimation =
+    //     spriteSheet.createAnimation(0, from: 0, to: 3, stepTime: 0.1);
 
     final runAnimation =
         spriteSheet.createAnimation(0, from: 4, to: 10, stepTime: 0.1);

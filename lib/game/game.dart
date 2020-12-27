@@ -1,8 +1,9 @@
 import 'package:dino_run/game/dino.dart';
+import 'package:dino_run/game/enemy.dart';
 import 'package:flame/components/parallax_component.dart';
 import 'package:flame/game/base_game.dart';
 import 'package:flame/gestures.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 
 class DinoGame extends BaseGame with TapDetector {
   Dino _dino;
@@ -25,6 +26,9 @@ class DinoGame extends BaseGame with TapDetector {
 
     _dino = Dino();
     add(_dino);
+
+    var enemy = Enemy(EnemyType.Rino);
+    add(enemy);
   }
 
   @override

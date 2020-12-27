@@ -49,6 +49,9 @@ flutter:
   assets:
     - assets/images/
     - assets/images/parallax/
+    - assets/images/AngryPig/
+    - assets/images/Bat/
+    - assets/images/Rino/
     - assets/audio/
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -115,6 +115,7 @@ class Dino extends AnimationComponent {
   void hit() {
     // Ignore if already in hit state.
     if (!_isHit) {
+      _isHit = true;
       this.animation = _hitAnimation;
 
       /// Start the timer so that animation is reset to [_runAnimation]

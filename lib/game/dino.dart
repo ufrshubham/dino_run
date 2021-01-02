@@ -5,6 +5,7 @@ import 'package:flame/animation.dart';
 import 'package:flame/components/animation_component.dart';
 import 'package:flame/spritesheet.dart';
 import 'package:flame/time.dart';
+import 'package:flutter/foundation.dart';
 
 import 'constants.dart';
 
@@ -29,6 +30,8 @@ class Dino extends AnimationComponent {
   // The max distance from top of the screen beyond which
   // dino should never go. Basically the screen height - ground height
   double yMax = 0.0;
+
+  ValueNotifier<int> life;
 
   Dino() : super.empty() {
     // 0 - 3 = idle
@@ -64,6 +67,8 @@ class Dino extends AnimationComponent {
 
     // This makes sure that origin of dino is at its center, instead of top-left corner.
     this.anchor = Anchor.center;
+
+    life = ValueNotifier(5);
   }
 
   @override
@@ -117,6 +122,7 @@ class Dino extends AnimationComponent {
     if (!_isHit) {
       _isHit = true;
       this.animation = _hitAnimation;
+      life.value -= 1;
 
       /// Start the timer so that animation is reset to [_runAnimation]
       /// after 1 seconds.

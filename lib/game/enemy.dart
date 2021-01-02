@@ -99,7 +99,7 @@ class Enemy extends AnimationComponent {
 
     this.animation = spriteSheet.createAnimation(0,
         from: 0, to: (_myData.nColumns - 1), stepTime: 0.1);
-    
+
     // Makes sure that origin is at center of enemy sprite.
     this.anchor = Anchor.center;
   }
@@ -108,7 +108,7 @@ class Enemy extends AnimationComponent {
   void resize(Size size) {
     super.resize(size);
 
-    /// The scale factor to be multiplied with [this.width] to make it 
+    /// The scale factor to be multiplied with [this.width] to make it
     /// equal to dino's width.
     double scaleFactor =
         (size.width / numberOfTilesAlongWidth) / _myData.textureWidth;
@@ -137,7 +137,7 @@ class Enemy extends AnimationComponent {
   // This method is used by the flame engine to check if this component should be destroyed.
   @override
   bool destroy() {
-    // Let the framework know that this enemy can be destroyed 
+    // Let the framework know that this enemy can be destroyed
     // once it goes off screen from left end.
     return (this.x < (-this.width));
   }

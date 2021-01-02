@@ -27,7 +27,6 @@ class DinoGame extends BaseGame with TapDetector {
   /// This default constructor is responsible for creating all the components
   /// and adding them to [DinoGame]'s components list.
   DinoGame() {
-
     /// Last [ParallaxImage] uses [LayerFill.none] so that ground does not
     /// take up the whole screen.
     _parallaxComponent = ParallaxComponent(

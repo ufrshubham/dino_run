@@ -11,6 +11,7 @@ import 'package:flame/text_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+// This is the main game class.
 class DinoGame extends BaseGame with TapDetector, HasWidgetsOverlay {
   // This variable stores the current score of player.
   int score;
@@ -59,6 +60,8 @@ class DinoGame extends BaseGame with TapDetector, HasWidgetsOverlay {
     );
     add(_scoreText);
 
+    // This adds the pause button on top-left corner and
+    // life indicators on top-right corner.
     addWidgetOverlay('Hud', _buildHud());
   }
 
@@ -95,11 +98,14 @@ class DinoGame extends BaseGame with TapDetector, HasWidgetsOverlay {
       }
     });
 
+    // If dino runs out of lives, game is over.
     if (_dino.life.value <= 0) {
       gameOver();
     }
   }
 
+  // This method helps in detecting changes in app's life cycle state
+  // and pause the game if it becomes inactive.
   @override
   void lifecycleStateChange(AppLifecycleState state) {
     switch (state) {
@@ -117,6 +123,7 @@ class DinoGame extends BaseGame with TapDetector, HasWidgetsOverlay {
     }
   }
 
+  // Build the HUD for this game.
   Widget _buildHud() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -136,6 +143,8 @@ class DinoGame extends BaseGame with TapDetector, HasWidgetsOverlay {
           builder: (BuildContext context, value, Widget child) {
             final list = List<Widget>();
 
+            // This loop decides how many hearts are filled and how many are empty
+            // depending upon the current dino life.
             for (int i = 0; i < 5; ++i) {
               list.add(
                 Icon(
@@ -154,12 +163,14 @@ class DinoGame extends BaseGame with TapDetector, HasWidgetsOverlay {
     );
   }
 
+  // This method pauses the game.
   void pauseGame() {
     pauseEngine();
-
+    // Adds the pause menu.
     addWidgetOverlay('PauseMenu', _buildPauseMenu());
   }
 
+  // This method build the pause menu.
   Widget _buildPauseMenu() {
     return Center(
       child: Card(
@@ -197,16 +208,22 @@ class DinoGame extends BaseGame with TapDetector, HasWidgetsOverlay {
     );
   }
 
+  // This method resumes the game.
   void resumeGame() {
+    // First remove any pause menu and then resume the engine.
     removeWidgetOverlay('PauseMenu');
     resumeEngine();
   }
 
+  // This method display the game over menu.
   void gameOver() {
+    // First pause the game.
     pauseEngine();
+    // Adds the game over menu.
     addWidgetOverlay('GameOverMenu', _getGameOverMenu());
   }
 
+  // This method builds the game over menu.
   Widget _getGameOverMenu() {
     return Center(
       child: Card(
@@ -238,6 +255,8 @@ class DinoGame extends BaseGame with TapDetector, HasWidgetsOverlay {
                   size: 30.0,
                 ),
                 onPressed: () {
+                  // First reset all the necessary game data,
+                  // then remove game over menu and resume the game.
                   reset();
                   removeWidgetOverlay('GameOverMenu');
                   resumeEngine();
@@ -250,12 +269,16 @@ class DinoGame extends BaseGame with TapDetector, HasWidgetsOverlay {
     );
   }
 
+  // This method takes care of resetting all the game data to initial state.
   void reset() {
     this.score = 0;
     _dino.life.value = 5;
     _dino.run();
+
+    // Let enemy manager know that game needs to reset.
     _enemyManager.reset();
 
+    // Removes all the enemies currently in the game world.
     components.whereType<Enemy>().forEach(
       (enemy) {
         this.markToRemove(enemy);

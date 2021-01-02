@@ -31,6 +31,8 @@ class Dino extends AnimationComponent {
   // dino should never go. Basically the screen height - ground height
   double yMax = 0.0;
 
+  // This notifier keeps track of dino's remaining lives.
+  // It also notifies all listeners when it changes.
   ValueNotifier<int> life;
 
   Dino() : super.empty() {
@@ -122,6 +124,8 @@ class Dino extends AnimationComponent {
     if (!_isHit) {
       _isHit = true;
       this.animation = _hitAnimation;
+
+      // Reduce life by 1.
       life.value -= 1;
 
       /// Start the timer so that animation is reset to [_runAnimation]

@@ -69,6 +69,7 @@ class EnemyManager extends Component with HasGameRef<DinoGame> {
     }
   }
 
+  /// This method is responsible for resetting the [_spawnLevel] and [_timer]
   void reset() {
     _spawnLevel = 0;
     _timer = Timer(4, repeat: true, callback: () {

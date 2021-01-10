@@ -1,6 +1,9 @@
 import 'package:dino_run/game/dino.dart';
 import 'package:dino_run/game/enemy.dart';
 import 'package:dino_run/game/enemy_manager.dart';
+import 'package:dino_run/widgets/game_over_menu.dart';
+import 'package:dino_run/widgets/hud.dart';
+import 'package:dino_run/widgets/pause_menu.dart';
 import 'package:flame/components/parallax_component.dart';
 import 'package:flame/components/text_component.dart';
 import 'package:flame/game/base_game.dart';
@@ -62,7 +65,13 @@ class DinoGame extends BaseGame with TapDetector, HasWidgetsOverlay {
 
     // This adds the pause button on top-left corner and
     // life indicators on top-right corner.
-    addWidgetOverlay('Hud', _buildHud());
+    addWidgetOverlay(
+      'Hud',
+      HUD(
+        life: _dino.life,
+        onPausePressed: pauseGame,
+      ),
+    );
   }
 
   @override
@@ -123,87 +132,14 @@ class DinoGame extends BaseGame with TapDetector, HasWidgetsOverlay {
     }
   }
 
-  // Build the HUD for this game.
-  Widget _buildHud() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        IconButton(
-          icon: Icon(
-            Icons.pause,
-            color: Colors.white,
-            size: 30.0,
-          ),
-          onPressed: () {
-            pauseGame();
-          },
-        ),
-        ValueListenableBuilder(
-          valueListenable: _dino.life,
-          builder: (BuildContext context, value, Widget child) {
-            final list = List<Widget>();
-
-            // This loop decides how many hearts are filled and how many are empty
-            // depending upon the current dino life.
-            for (int i = 0; i < 5; ++i) {
-              list.add(
-                Icon(
-                  (i < value) ? Icons.favorite : Icons.favorite_border,
-                  color: Colors.red,
-                ),
-              );
-            }
-
-            return Row(
-              children: list,
-            );
-          },
-        )
-      ],
-    );
-  }
-
   // This method pauses the game.
   void pauseGame() {
     pauseEngine();
     // Adds the pause menu.
-    addWidgetOverlay('PauseMenu', _buildPauseMenu());
-  }
-
-  // This method build the pause menu.
-  Widget _buildPauseMenu() {
-    return Center(
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        color: Colors.black.withOpacity(0.5),
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: 100.0,
-            vertical: 50.0,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'Paused',
-                style: TextStyle(fontSize: 30.0, color: Colors.white),
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.play_arrow,
-                  color: Colors.white,
-                  size: 30.0,
-                ),
-                onPressed: () {
-                  resumeGame();
-                },
-              )
-            ],
-          ),
-        ),
+    addWidgetOverlay(
+      'PauseMenu',
+      PauseMenu(
+        onResumePressed: resumeGame,
       ),
     );
   }
@@ -220,51 +156,11 @@ class DinoGame extends BaseGame with TapDetector, HasWidgetsOverlay {
     // First pause the game.
     pauseEngine();
     // Adds the game over menu.
-    addWidgetOverlay('GameOverMenu', _getGameOverMenu());
-  }
-
-  // This method builds the game over menu.
-  Widget _getGameOverMenu() {
-    return Center(
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        color: Colors.black.withOpacity(0.5),
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: 100.0,
-            vertical: 50.0,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'Game Over',
-                style: TextStyle(fontSize: 30.0, color: Colors.white),
-              ),
-              Text(
-                'Your score was $score',
-                style: TextStyle(fontSize: 30.0, color: Colors.white),
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.replay,
-                  color: Colors.white,
-                  size: 30.0,
-                ),
-                onPressed: () {
-                  // First reset all the necessary game data,
-                  // then remove game over menu and resume the game.
-                  reset();
-                  removeWidgetOverlay('GameOverMenu');
-                  resumeEngine();
-                },
-              )
-            ],
-          ),
-        ),
+    addWidgetOverlay(
+      'GameOverMenu',
+      GameOverMenu(
+        score: score,
+        onRestartPressed: reset,
       ),
     );
   }
@@ -284,5 +180,8 @@ class DinoGame extends BaseGame with TapDetector, HasWidgetsOverlay {
         this.markToRemove(enemy);
       },
     );
+
+    removeWidgetOverlay('GameOverMenu');
+    resumeEngine();
   }
 }

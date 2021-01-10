@@ -74,3 +74,8 @@ doc/api/
 
 .flutter-plugins
 .flutter-plugins-dependencies
+
+# secrets
+secrets/
+debugInfo/
+key.property

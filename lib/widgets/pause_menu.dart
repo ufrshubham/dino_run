@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 // Builds the pause menu for this game.
 class PauseMenu extends StatelessWidget {
-  // This function will be called when resume 
+  // This function will be called when resume
   // button is pressed.
   final Function onResumePressed;
 

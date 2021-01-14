@@ -19,6 +19,9 @@ class DinoGame extends BaseGame with TapDetector, HasWidgetsOverlay {
   // This variable stores the current score of player.
   int score;
 
+  // A temp variable for score calculations.
+  double _elapsedTime = 0.0;
+
   // This is the main character component.
   Dino _dino;
 
@@ -96,8 +99,12 @@ class DinoGame extends BaseGame with TapDetector, HasWidgetsOverlay {
     super.update(t);
 
     /// Here [60] is the rate of increase of score.
-    score += (60 * t).toInt();
-    _scoreText.text = score.toString();
+    _elapsedTime += t;
+    if (_elapsedTime > (1 / 60)) {
+      _elapsedTime = 0.0;
+      score += 1;
+      _scoreText.text = score.toString();
+    }
 
     /// This code is responsible for hit detection of [_dino]
     /// with all the [Enemy]'s current in game world.

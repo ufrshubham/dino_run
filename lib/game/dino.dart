@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:dino_run/game/audio_manager.dart';
 import 'package:flame/anchor.dart';
 import 'package:flame/animation.dart';
 import 'package:flame/components/animation_component.dart';
@@ -128,6 +129,8 @@ class Dino extends AnimationComponent {
       // Reduce life by 1.
       life.value -= 1;
 
+      AudioManager.instance.playSfx('hurt7.wav');
+
       /// Start the timer so that animation is reset to [_runAnimation]
       /// after 1 seconds.
       _timer.start();
@@ -139,6 +142,7 @@ class Dino extends AnimationComponent {
     // Jump only if dino is on ground.
     if (isOnGround()) {
       this.speedY = -500;
+      AudioManager.instance.playSfx('jump14.wav');
     }
   }
 }

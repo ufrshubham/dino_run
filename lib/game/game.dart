@@ -1,3 +1,4 @@
+import 'package:dino_run/game/audio_manager.dart';
 import 'package:dino_run/game/dino.dart';
 import 'package:dino_run/game/enemy.dart';
 import 'package:dino_run/game/enemy_manager.dart';
@@ -33,6 +34,10 @@ class DinoGame extends BaseGame with TapDetector, HasWidgetsOverlay {
 
   // This component creates the moving parallax background.
   ParallaxComponent _parallaxComponent;
+
+  // These flags help to detect current state of the game.
+  bool _isGameOver = false;
+  bool _isGamePaused = false;
 
   /// This default constructor is responsible for creating all the components
   /// and adding them to [DinoGame]'s components list.
@@ -75,6 +80,8 @@ class DinoGame extends BaseGame with TapDetector, HasWidgetsOverlay {
         onPausePressed: pauseGame,
       ),
     );
+
+    AudioManager.instance.startBgm('8Bit Platformer Loop.wav');
   }
 
   @override
@@ -91,7 +98,9 @@ class DinoGame extends BaseGame with TapDetector, HasWidgetsOverlay {
   @override
   void onTapDown(TapDownDetails details) {
     super.onTapDown(details);
-    _dino.jump();
+    if (!_isGameOver && !_isGamePaused) {
+      _dino.jump();
+    }
   }
 
   @override
@@ -142,26 +151,38 @@ class DinoGame extends BaseGame with TapDetector, HasWidgetsOverlay {
   // This method pauses the game.
   void pauseGame() {
     pauseEngine();
-    // Adds the pause menu.
-    addWidgetOverlay(
-      'PauseMenu',
-      PauseMenu(
-        onResumePressed: resumeGame,
-      ),
-    );
+
+    if (!_isGameOver) {
+      _isGamePaused = true;
+      // Adds the pause menu.
+      addWidgetOverlay(
+        'PauseMenu',
+        PauseMenu(
+          onResumePressed: resumeGame,
+        ),
+      );
+    }
+    AudioManager.instance.pauseBgm();
   }
 
   // This method resumes the game.
   void resumeGame() {
     // First remove any pause menu and then resume the engine.
     removeWidgetOverlay('PauseMenu');
+
+    _isGamePaused = false;
+
     resumeEngine();
+    AudioManager.instance.resumeBgm();
   }
 
   // This method display the game over menu.
   void gameOver() {
     // First pause the game.
     pauseEngine();
+
+    _isGameOver = true;
+
     // Adds the game over menu.
     addWidgetOverlay(
       'GameOverMenu',
@@ -170,6 +191,7 @@ class DinoGame extends BaseGame with TapDetector, HasWidgetsOverlay {
         onRestartPressed: reset,
       ),
     );
+    AudioManager.instance.pauseBgm();
   }
 
   // This method takes care of resetting all the game data to initial state.
@@ -189,6 +211,14 @@ class DinoGame extends BaseGame with TapDetector, HasWidgetsOverlay {
     );
 
     removeWidgetOverlay('GameOverMenu');
+    _isGameOver = false;
     resumeEngine();
+    AudioManager.instance.resumeBgm();
+  }
+
+  @override
+  void onDetach() {
+    AudioManager.instance.stopBgm();
+    super.onDetach();
   }
 }

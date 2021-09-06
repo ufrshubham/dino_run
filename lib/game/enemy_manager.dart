@@ -1,80 +1,64 @@
 import 'dart:math';
-import 'dart:ui';
 
+import 'package:dino_run/game/dino_run.dart';
 import 'package:dino_run/game/enemy.dart';
-import 'package:dino_run/game/game.dart';
-import 'package:flame/components/component.dart';
-import 'package:flame/components/mixins/has_game_ref.dart';
-import 'package:flame/time.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:dino_run/models/enemy_data.dart';
+import 'package:flame/components.dart';
 
-// This class is responsible for spawning random enemies at certain
-// interval of time depending upon players current score.
-class EnemyManager extends Component with HasGameRef<DinoGame> {
-  /// Random generator required for randomly selecting [EnemyType]
-  Random _random;
+class EnemyManager extends BaseComponent with HasGameRef<DinoRun> {
+  final List<EnemyData> _data = [];
 
-  // Timer to decide when to spawn next enemy.
-  Timer _timer;
-
-  // This indicates how aggressively enemies are spawned.
-  int _spawnLevel;
+  Random _random = Random();
+  Timer _timer = Timer(2, repeat: true);
 
   EnemyManager() {
-    _random = Random();
-    _spawnLevel = 0;
-    _timer = Timer(4, repeat: true, callback: () {
-      spawnRandomEnemy();
-    });
+    _timer.callback = spawnRandomEnemy;
   }
 
-  /// This method is responsible for spawning an enemy of random [EnemyType].
   void spawnRandomEnemy() {
-    /// Get a random integer from 0 to number of [EnemyType]s -1.
-    final randomNumber = _random.nextInt(EnemyType.values.length);
-    final randomEnemyType = EnemyType.values.elementAt(randomNumber);
-    final newEnemy = Enemy(randomEnemyType);
-    gameRef.addLater(newEnemy);
+    final randomIndex = _random.nextInt(_data.length);
+    final enemyData = _data.elementAt(randomIndex);
+    final enemy = Enemy(enemyData);
+
+    final randomPosition = Vector2.random();
+
+    enemy.position = Vector2(
+      randomPosition.x * (gameRef.size.x - enemyData.textureSize.x),
+      randomPosition.y * (gameRef.size.y - enemyData.textureSize.y),
+    );
+    enemy.size = enemyData.textureSize;
+    gameRef.add(enemy);
   }
 
-  /// This method starts the [_timer]. It get called when this [EnemyManager]
-  /// gets added to an [Game] instance.
   @override
   void onMount() {
+    _data.addAll([
+      EnemyData(
+        image: gameRef.images.fromCache('AngryPig/Walk (36x30).png'),
+        nFrames: 16,
+        stepTime: 0.1,
+        textureSize: Vector2(36, 30),
+      ),
+      EnemyData(
+        image: gameRef.images.fromCache('Bat/Flying (46x30).png'),
+        nFrames: 7,
+        stepTime: 0.1,
+        textureSize: Vector2(46, 30),
+      ),
+      EnemyData(
+        image: gameRef.images.fromCache('Rino/Run (52x34).png'),
+        nFrames: 6,
+        stepTime: 0.09,
+        textureSize: Vector2(52, 34),
+      ),
+    ]);
+    _timer.start();
     super.onMount();
-    _timer.start();
   }
 
-  /// Not needed for [EnemyManager] but [Component] class forces to implement it.
   @override
-  void render(Canvas c) {}
-
-  @override
-  void update(double t) {
-    _timer.update(t);
-
-    /// This increases [_spawnLevel] by 1, every 500 score points.
-    var newSpawnLevel = (gameRef.score ~/ 500);
-    if (_spawnLevel < newSpawnLevel) {
-      _spawnLevel = newSpawnLevel;
-
-      // y = 4 / (1 + 0.1 * x)
-      var newWaitTime = (4 / (1 + (0.1 * _spawnLevel)));
-
-      _timer.stop();
-      _timer = Timer(newWaitTime, repeat: true, callback: () {
-        spawnRandomEnemy();
-      });
-      _timer.start();
-    }
-  }
-
-  /// This method is responsible for resetting the [_spawnLevel] and [_timer]
-  void reset() {
-    _spawnLevel = 0;
-    _timer = Timer(4, repeat: true, callback: () {
-      spawnRandomEnemy();
-    });
-    _timer.start();
+  void update(double dt) {
+    _timer.update(dt);
+    super.update(dt);
   }
 }

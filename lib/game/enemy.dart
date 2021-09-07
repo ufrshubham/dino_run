@@ -4,7 +4,9 @@ import 'package:flame/extensions.dart';
 import 'package:flame/geometry.dart';
 
 class Enemy extends SpriteAnimationComponent with Hitbox, Collidable {
-  Enemy(EnemyData enemyData) {
+  final EnemyData enemyData;
+
+  Enemy(this.enemyData) {
     this.animation = SpriteAnimation.fromFrameData(
       enemyData.image,
       SpriteAnimationData.sequenced(
@@ -19,6 +21,7 @@ class Enemy extends SpriteAnimationComponent with Hitbox, Collidable {
   Future<void>? onLoad() {
     final shape = HitboxRectangle(relation: Vector2.all(0.8));
     addShape(shape);
+
     return super.onLoad();
   }
 
@@ -30,7 +33,11 @@ class Enemy extends SpriteAnimationComponent with Hitbox, Collidable {
 
   @override
   void update(double dt) {
-    this.position.x -= 50 * dt;
+    this.position.x -= enemyData.speedX * dt;
+
+    if (this.position.x < -5) {
+      remove();
+    }
     super.update(dt);
   }
 

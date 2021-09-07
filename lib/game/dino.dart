@@ -21,30 +21,41 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
       textureSize: Vector2.all(24),
     ),
     DinoAnimationStates.Run: SpriteAnimationData.sequenced(
-      amount: 7,
+      amount: 6,
       stepTime: 0.1,
       textureSize: Vector2.all(24),
       texturePosition: Vector2((4) * 24, 0),
     ),
     DinoAnimationStates.Kick: SpriteAnimationData.sequenced(
-      amount: 3,
+      amount: 4,
       stepTime: 0.1,
       textureSize: Vector2.all(24),
-      texturePosition: Vector2((4 + 7) * 24, 0),
+      texturePosition: Vector2((4 + 6) * 24, 0),
     ),
     DinoAnimationStates.Hit: SpriteAnimationData.sequenced(
       amount: 3,
       stepTime: 0.1,
       textureSize: Vector2.all(24),
-      texturePosition: Vector2((4 + 7 + 3) * 24, 0),
+      texturePosition: Vector2((4 + 6 + 4) * 24, 0),
     ),
     DinoAnimationStates.Sprint: SpriteAnimationData.sequenced(
       amount: 7,
       stepTime: 0.1,
       textureSize: Vector2.all(24),
-      texturePosition: Vector2((4 + 7 + 3 + 3) * 24, 0),
+      texturePosition: Vector2((4 + 6 + 4 + 3) * 24, 0),
     ),
   };
+
+  // The max distance from top of the screen beyond which
+  // dino should never go. Basically the screen height - ground height
+  double yMax = 0.0;
+
+  // Dino's current speed along y-axis.
+  double speedY = 0.0;
+
+  Timer _hitTimer = Timer(1);
+
+  static const double GRAVITY = 800;
 
   Dino.fromFrameData(Image image) : super.fromFrameData(image, _animationMap);
 
@@ -52,15 +63,59 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
   void onMount() {
     final shape = HitboxRectangle(relation: Vector2(0.5, 0.7));
     addShape(shape);
+    yMax = this.y;
+
+    _hitTimer.callback = () {
+      this.current = DinoAnimationStates.Run;
+    };
 
     super.onMount();
   }
 
   @override
+  void update(double dt) {
+    // v = u + at
+    this.speedY += GRAVITY * dt;
+
+    // d = s0 + s * t
+    this.y += this.speedY * dt;
+
+    /// This code makes sure that dino never goes beyond [yMax].
+    if (isOnGround) {
+      this.y = this.yMax;
+      this.speedY = 0.0;
+      if ((this.current != DinoAnimationStates.Hit) &&
+          (this.current != DinoAnimationStates.Run)) {
+        this.current = DinoAnimationStates.Run;
+      }
+    }
+
+    _hitTimer.update(dt);
+    super.update(dt);
+  }
+
+  @override
   void onCollision(Set<Vector2> intersectionPoints, Collidable other) {
     if (other is Enemy) {
-      this.current = DinoAnimationStates.Hit;
+      this.hit();
     }
     super.onCollision(intersectionPoints, other);
+  }
+
+  // Returns true if dino is on ground.
+  bool get isOnGround => (this.y >= this.yMax);
+
+  // Makes the dino jump.
+  void jump() {
+    // Jump only if dino is on ground.
+    if (isOnGround) {
+      this.speedY = -300;
+      this.current = DinoAnimationStates.Idle;
+    }
+  }
+
+  void hit() {
+    this.current = DinoAnimationStates.Hit;
+    _hitTimer.start();
   }
 }

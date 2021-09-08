@@ -1,11 +1,13 @@
 import 'package:dino_run/game/dino.dart';
 import 'package:dino_run/game/enemy_manager.dart';
+import 'package:dino_run/models/player_data.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
 import 'package:flame/parallax.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class DinoRun extends BaseGame with TapDetector, HasCollidables {
   static const _imageAssets = [
@@ -22,9 +24,11 @@ class DinoRun extends BaseGame with TapDetector, HasCollidables {
   ];
 
   late Dino _dino;
+  late PlayerData _playerData;
 
   @override
   Future<void> onLoad() async {
+    _playerData = await _readPlayerData();
     await images.loadAll(_imageAssets);
 
     this.viewport = FixedResolutionViewport(Vector2(320, 180));
@@ -44,7 +48,7 @@ class DinoRun extends BaseGame with TapDetector, HasCollidables {
 
     add(parallaxBackground);
 
-    _dino = Dino.fromFrameData(images.fromCache('DinoSprites - tard.png'));
+    _dino = Dino(images.fromCache('DinoSprites - tard.png'), _playerData);
 
     _dino.anchor = Anchor.bottomLeft;
     _dino.position = Vector2(32, size.y - 22);
@@ -66,5 +70,15 @@ class DinoRun extends BaseGame with TapDetector, HasCollidables {
   void onTapDown(TapDownInfo info) {
     _dino.jump();
     super.onTapDown(info);
+  }
+
+  Future<PlayerData> _readPlayerData() async {
+    final playerDataBox =
+        await Hive.openBox<PlayerData>('DinoRun.PlayerDataBox');
+    final playerData = playerDataBox.get('DinoRun.PlayerData');
+    if (playerData == null) {
+      playerDataBox.put('DinoRun.PlayerData', PlayerData());
+    }
+    return playerDataBox.get('DinoRun.PlayerData')!;
   }
 }

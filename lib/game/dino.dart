@@ -1,6 +1,9 @@
 import 'dart:ui';
 
+import 'package:dino_run/game/dino_run.dart';
 import 'package:dino_run/game/enemy.dart';
+import 'package:dino_run/models/player_data.dart';
+
 import 'package:flame/components.dart';
 import 'package:flame/geometry.dart';
 
@@ -13,7 +16,7 @@ enum DinoAnimationStates {
 }
 
 class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
-    with Hitbox, Collidable {
+    with Hitbox, Collidable, HasGameRef<DinoRun> {
   static final _animationMap = {
     DinoAnimationStates.Idle: SpriteAnimationData.sequenced(
       amount: 4,
@@ -57,7 +60,12 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
 
   static const double GRAVITY = 800;
 
-  Dino.fromFrameData(Image image) : super.fromFrameData(image, _animationMap);
+  final PlayerData playerData;
+
+  bool isHit = false;
+
+  Dino(Image image, this.playerData)
+      : super.fromFrameData(image, _animationMap);
 
   @override
   void onMount() {
@@ -96,7 +104,7 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, Collidable other) {
-    if (other is Enemy) {
+    if ((other is Enemy) && (!isHit)) {
       this.hit();
     }
     super.onCollision(intersectionPoints, other);
@@ -117,5 +125,6 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
   void hit() {
     this.current = DinoAnimationStates.Hit;
     _hitTimer.start();
+    playerData.reduceLife();
   }
 }

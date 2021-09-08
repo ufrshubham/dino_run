@@ -24,6 +24,7 @@ dependencies:
   flame: 1.0.0-releasecandidate.13
   hive: 2.0.4
   path_provider: 2.0.3
+  provider: 6.0.0
   flutter:
     sdk: flutter
 
@@ -32,6 +33,8 @@ dependencies:
   cupertino_icons: ^1.0.3
 
 dev_dependencies:
+  hive_generator: 1.1.0
+  build_runner: 2.1.2
   flutter_test:
     sdk: flutter
 

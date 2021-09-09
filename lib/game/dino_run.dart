@@ -6,6 +6,7 @@ import 'package:flame/extensions.dart';
 import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
 import 'package:flame/parallax.dart';
+import 'package:flame/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -24,11 +25,11 @@ class DinoRun extends BaseGame with TapDetector, HasCollidables {
   ];
 
   late Dino _dino;
-  late PlayerData _playerData;
+  late PlayerData playerData;
 
   @override
   Future<void> onLoad() async {
-    _playerData = await _readPlayerData();
+    playerData = await _readPlayerData();
     await images.loadAll(_imageAssets);
 
     this.viewport = FixedResolutionViewport(Vector2(320, 180));
@@ -48,7 +49,7 @@ class DinoRun extends BaseGame with TapDetector, HasCollidables {
 
     add(parallaxBackground);
 
-    _dino = Dino(images.fromCache('DinoSprites - tard.png'), _playerData);
+    _dino = Dino(images.fromCache('DinoSprites - tard.png'), playerData);
 
     _dino.anchor = Anchor.bottomLeft;
     _dino.position = Vector2(32, size.y - 22);

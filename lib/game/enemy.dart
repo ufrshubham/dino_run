@@ -1,9 +1,11 @@
+import 'package:dino_run/game/dino_run.dart';
 import 'package:dino_run/models/enemy_data.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'package:flame/geometry.dart';
 
-class Enemy extends SpriteAnimationComponent with Hitbox, Collidable {
+class Enemy extends SpriteAnimationComponent
+    with Hitbox, Collidable, HasGameRef<DinoRun> {
   final EnemyData enemyData;
 
   Enemy(this.enemyData) {
@@ -38,7 +40,14 @@ class Enemy extends SpriteAnimationComponent with Hitbox, Collidable {
     if (this.position.x < -5) {
       remove();
     }
+
     super.update(dt);
+  }
+
+  @override
+  void onRemove() {
+    gameRef.playerData.increaseScoreBy(1);
+    super.onRemove();
   }
 
   @override

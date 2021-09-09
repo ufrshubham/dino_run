@@ -75,6 +75,7 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
 
     _hitTimer.callback = () {
       this.current = DinoAnimationStates.Run;
+      this.isHit = false;
     };
 
     super.onMount();
@@ -123,6 +124,7 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
   }
 
   void hit() {
+    this.isHit = true;
     this.current = DinoAnimationStates.Hit;
     _hitTimer.start();
     playerData.reduceLife();

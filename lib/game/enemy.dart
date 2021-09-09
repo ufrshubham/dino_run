@@ -28,9 +28,9 @@ class Enemy extends SpriteAnimationComponent
   }
 
   @override
-  void onGameResize(Vector2 gameSize) {
+  void onMount() {
     this.size *= 0.6;
-    super.onGameResize(gameSize);
+    super.onMount();
   }
 
   @override

@@ -69,6 +69,14 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
 
   @override
   void onMount() {
+    this.shouldRemove = false;
+    this.anchor = Anchor.bottomLeft;
+    this.position = Vector2(32, gameRef.size.y - 22);
+    this.size = Vector2.all(24);
+    this.current = DinoAnimationStates.Run;
+    this.isHit = false;
+    speedY = 0.0;
+
     final shape = HitboxRectangle(relation: Vector2(0.5, 0.7));
     addShape(shape);
     yMax = this.y;

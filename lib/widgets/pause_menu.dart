@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:dino_run/game/dino_run.dart';
 import 'package:dino_run/widgets/hud.dart';
+import 'package:dino_run/widgets/main_menu.dart';
 import 'package:flutter/material.dart';
 
 class PauseMenu extends StatelessWidget {
@@ -50,7 +51,12 @@ class PauseMenu extends StatelessWidget {
                     ),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      gameRef.overlays.remove(PauseMenu.id);
+                      gameRef.overlays.add(MainMenu.id);
+                      gameRef.resumeEngine();
+                      gameRef.disconnectActors();
+                    },
                     child: Text(
                       'Exit',
                       style: TextStyle(

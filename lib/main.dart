@@ -1,5 +1,6 @@
 import 'package:dino_run/models/player_data.dart';
 import 'package:dino_run/widgets/hud.dart';
+import 'package:dino_run/widgets/main_menu.dart';
 import 'package:dino_run/widgets/pause_menu.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
@@ -39,10 +40,11 @@ class MyApp extends StatelessWidget {
             ),
           ),
           overlayBuilderMap: {
-            PauseMenu.id: (context, DinoRun gameRef) => PauseMenu(gameRef),
-            Hud.id: (context, DinoRun gameRef) => Hud(gameRef),
+            MainMenu.id: (_, DinoRun gameRef) => MainMenu(gameRef),
+            PauseMenu.id: (_, DinoRun gameRef) => PauseMenu(gameRef),
+            Hud.id: (_, DinoRun gameRef) => Hud(gameRef),
           },
-          initialActiveOverlays: [Hud.id],
+          initialActiveOverlays: [MainMenu.id],
           game: _dinoRun,
         ),
       ),

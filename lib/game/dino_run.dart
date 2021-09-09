@@ -6,7 +6,6 @@ import 'package:flame/extensions.dart';
 import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
 import 'package:flame/parallax.dart';
-import 'package:flame/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -26,6 +25,7 @@ class DinoRun extends BaseGame with TapDetector, HasCollidables {
 
   late Dino _dino;
   late PlayerData playerData;
+  late EnemyManager _enemyManager;
 
   @override
   Future<void> onLoad() async {
@@ -51,17 +51,20 @@ class DinoRun extends BaseGame with TapDetector, HasCollidables {
 
     _dino = Dino(images.fromCache('DinoSprites - tard.png'), playerData);
 
-    _dino.anchor = Anchor.bottomLeft;
-    _dino.position = Vector2(32, size.y - 22);
-    _dino.size = Vector2.all(24);
-    _dino.current = DinoAnimationStates.Run;
-
-    add(_dino);
-
-    final enemyManager = EnemyManager();
-    add(enemyManager);
+    _enemyManager = EnemyManager();
 
     return super.onLoad();
+  }
+
+  void startGamePlay() {
+    add(_dino);
+    add(_enemyManager);
+  }
+
+  void disconnectActors() {
+    _dino.remove();
+    _enemyManager.removeAllEnemies();
+    _enemyManager.remove();
   }
 
   @override

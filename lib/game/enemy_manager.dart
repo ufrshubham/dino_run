@@ -38,6 +38,7 @@ class EnemyManager extends BaseComponent with HasGameRef<DinoRun> {
 
   @override
   void onMount() {
+    this.shouldRemove = false;
     _data.addAll([
       EnemyData(
         image: gameRef.images.fromCache('AngryPig/Walk (36x30).png'),
@@ -72,5 +73,10 @@ class EnemyManager extends BaseComponent with HasGameRef<DinoRun> {
   void update(double dt) {
     _timer.update(dt);
     super.update(dt);
+  }
+
+  void removeAllEnemies() {
+    final enemies = gameRef.components.whereType<Enemy>();
+    enemies.forEach((element) => element.remove());
   }
 }

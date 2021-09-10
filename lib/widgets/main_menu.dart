@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:dino_run/game/dino_run.dart';
 import 'package:dino_run/widgets/hud.dart';
+import 'package:dino_run/widgets/settings_menu.dart';
 import 'package:flutter/material.dart';
 
 class MainMenu extends StatelessWidget {
@@ -48,7 +49,10 @@ class MainMenu extends StatelessWidget {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      gameRef.overlays.remove(MainMenu.id);
+                      gameRef.overlays.add(SettingsMenu.id);
+                    },
                     child: Text(
                       'Settings',
                       style: TextStyle(

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:dino_run/game/audio_manager.dart';
 import 'package:dino_run/game/dino_run.dart';
 import 'package:dino_run/game/enemy.dart';
 import 'package:dino_run/models/player_data.dart';
@@ -128,11 +129,13 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
     if (isOnGround) {
       this.speedY = -300;
       this.current = DinoAnimationStates.Idle;
+      AudioManager.instance.playSfx('jump14.wav');
     }
   }
 
   void hit() {
     this.isHit = true;
+    AudioManager.instance.playSfx('hurt7.wav');
     this.current = DinoAnimationStates.Hit;
     _hitTimer.start();
     playerData.lives -= 1;

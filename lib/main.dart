@@ -1,8 +1,10 @@
 import 'package:dino_run/models/player_data.dart';
+import 'package:dino_run/models/settings.dart';
 import 'package:dino_run/widgets/game_over_menu.dart';
 import 'package:dino_run/widgets/hud.dart';
 import 'package:dino_run/widgets/main_menu.dart';
 import 'package:dino_run/widgets/pause_menu.dart';
+import 'package:dino_run/widgets/settings_menu.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
@@ -34,28 +36,31 @@ class MyApp extends StatelessWidget {
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
-            fixedSize: Size(150, 50),
+            fixedSize: Size(200, 60),
           ),
         ),
       ),
-      home: Scaffold(
-        body: GameWidget(
-          loadingBuilder: (conetxt) => Center(
-            child: Container(
-              width: 200,
-              child: LinearProgressIndicator(),
+      home: Builder(builder: (context) {
+        return Scaffold(
+          body: GameWidget(
+            loadingBuilder: (conetxt) => Center(
+              child: Container(
+                width: 200,
+                child: LinearProgressIndicator(),
+              ),
             ),
+            overlayBuilderMap: {
+              MainMenu.id: (_, DinoRun gameRef) => MainMenu(gameRef),
+              PauseMenu.id: (_, DinoRun gameRef) => PauseMenu(gameRef),
+              Hud.id: (_, DinoRun gameRef) => Hud(gameRef),
+              GameOverMenu.id: (_, DinoRun gameRef) => GameOverMenu(gameRef),
+              SettingsMenu.id: (_, DinoRun gameRef) => SettingsMenu(gameRef),
+            },
+            initialActiveOverlays: [MainMenu.id],
+            game: _dinoRun,
           ),
-          overlayBuilderMap: {
-            MainMenu.id: (_, DinoRun gameRef) => MainMenu(gameRef),
-            PauseMenu.id: (_, DinoRun gameRef) => PauseMenu(gameRef),
-            Hud.id: (_, DinoRun gameRef) => Hud(gameRef),
-            GameOverMenu.id: (_, DinoRun gameRef) => GameOverMenu(gameRef),
-          },
-          initialActiveOverlays: [MainMenu.id],
-          game: _dinoRun,
-        ),
-      ),
+        );
+      }),
     );
   }
 }
@@ -65,4 +70,5 @@ Future<void> initHive() async {
   Hive.init(dir.path);
 
   Hive.registerAdapter<PlayerData>(PlayerDataAdapter());
+  Hive.registerAdapter<Settings>(SettingsAdapter());
 }

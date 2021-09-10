@@ -1,14 +1,19 @@
 import 'dart:ui';
 
-import 'package:dino_run/game/audio_manager.dart';
-import 'package:dino_run/game/dino_run.dart';
-import 'package:dino_run/models/settings.dart';
-import 'package:dino_run/widgets/main_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '/game/dino_run.dart';
+import '/models/settings.dart';
+import '/widgets/main_menu.dart';
+import '/game/audio_manager.dart';
+
+// This represents the settings menu overlay.
 class SettingsMenu extends StatelessWidget {
+  // An unique identified for this overlay.
   static const id = 'SettingsMenu';
+
+  // Reference to parent game.
   final DinoRun gameRef;
 
   const SettingsMenu(this.gameRef, {Key? key}) : super(key: key);

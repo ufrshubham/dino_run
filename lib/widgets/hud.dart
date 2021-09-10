@@ -1,12 +1,20 @@
-import 'package:dino_run/game/dino_run.dart';
-import 'package:dino_run/models/player_data.dart';
-import 'package:dino_run/widgets/pause_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '/game/dino_run.dart';
+import '/game/audio_manager.dart';
+import '/models/player_data.dart';
+import '/widgets/pause_menu.dart';
+
+// This represents the head up display in game.
+// It consists of, current score, high score,
+// a pause button and number of remaining lives.
 class Hud extends StatelessWidget {
-  final DinoRun gameRef;
+  // An unique identified for this overlay.
   static const id = 'Hud';
+
+  // Reference to parent game.
+  final DinoRun gameRef;
 
   const Hud(this.gameRef, {Key? key}) : super(key: key);
 
@@ -47,6 +55,7 @@ class Hud extends StatelessWidget {
                 gameRef.overlays.remove(Hud.id);
                 gameRef.overlays.add(PauseMenu.id);
                 gameRef.pauseEngine();
+                AudioManager.instance.pauseBgm();
               },
               child: Icon(Icons.pause, color: Colors.white),
             ),

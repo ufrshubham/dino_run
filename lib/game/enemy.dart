@@ -1,11 +1,14 @@
-import 'package:dino_run/game/dino_run.dart';
-import 'package:dino_run/models/enemy_data.dart';
+import 'package:flame/geometry.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
-import 'package:flame/geometry.dart';
 
+import '/game/dino_run.dart';
+import '/models/enemy_data.dart';
+
+// This represents an enemy in the game world.
 class Enemy extends SpriteAnimationComponent
     with Hitbox, Collidable, HasGameRef<DinoRun> {
+  // The data required for creation of this enemy.
   final EnemyData enemyData;
 
   Enemy(this.enemyData) {
@@ -21,6 +24,7 @@ class Enemy extends SpriteAnimationComponent
 
   @override
   Future<void>? onLoad() {
+    // Add a hitbox for this enemy.
     final shape = HitboxRectangle(relation: Vector2.all(0.8));
     addShape(shape);
 
@@ -29,6 +33,8 @@ class Enemy extends SpriteAnimationComponent
 
   @override
   void onMount() {
+    // Reduce the size of enemy as they look too
+    // big compared to the dino.
     this.size *= 0.6;
     super.onMount();
   }
@@ -37,24 +43,13 @@ class Enemy extends SpriteAnimationComponent
   void update(double dt) {
     this.position.x -= enemyData.speedX * dt;
 
+    // Remove the enemy and increase player score
+    // by 1, if enemy has gone past left end of the screen.
     if (this.position.x < -5) {
       remove();
       gameRef.playerData.currentScore += 1;
     }
 
     super.update(dt);
-  }
-
-  @override
-  void onRemove() {
-    super.onRemove();
-  }
-
-  @override
-  void onCollision(Set<Vector2> intersectionPoints, Collidable other) {
-    if (other is ScreenCollidable) {
-      remove();
-    }
-    super.onCollision(intersectionPoints, other);
   }
 }

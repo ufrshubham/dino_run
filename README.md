@@ -1,64 +1,22 @@
-<div align="center" id="top"> 
-  <img src="./assets/images/DinoSprites_tard.gif" alt="Dino Run" width=64 height=64/>
+# Dino Run
 
-  &#xa0;
+A 2D infinite side scroller made using [Flame](https://flame-engine.org/) engine.
 
-  <!-- <a href="https://dino_run.netlify.app">Demo</a> -->
-</div>
+## Demo
 
-<h1 align="center">Dino Run</h1>
+![Menu](branding/menu.gif)
 
-<p align="center">
-  <img alt="Github top language" src="https://img.shields.io/github/languages/top/ufrshubham/dino_run?color=7745b7">
+![Jump](branding/jump.gif)
 
-  <img alt="Github language count" src="https://img.shields.io/github/languages/count/ufrshubham/dino_run?color=7745b7">
+![Hit](branding/hit.gif)
 
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/ufrshubham/dino_run?color=7745b7">
+## Downloads
 
-  <img alt="License" src="https://img.shields.io/github/license/ufrshubham/dino_run?color=7745b7">
+- [Google Play](https://play.google.com/store/apps/details?id=com.nobs.dino_run)
 
-  <img alt="Github issues" src="https://img.shields.io/github/issues/ufrshubham/dino_run?color=7745b7" />
+- [Itch.io](https://ufrshubham.itch.io/dino-run)
 
-  <img alt="Github forks" src="https://img.shields.io/github/forks/ufrshubham/dino_run?color=7745b7" />
-
-  <img alt="Github stars" src="https://img.shields.io/github/stars/ufrshubham/dino_run?color=7745b7" />
-</p>
-
-<!-- Status -->
-
-<h4 align="center"> 
-	🚧  Dino_run 🚀 Under construction...  🚧
-</h4> 
-
-<hr>
-
-<p align="center">
-  <a href="#dart-about">About</a> &#xa0; | &#xa0; 
-  <a href="#rocket-technologies">Technologies</a> &#xa0; | &#xa0;
-  <a href="#white_check_mark-requirements">Requirements</a> &#xa0; | &#xa0;
-  <a href="#checkered_flag-starting">Starting</a> &#xa0; | &#xa0;
-  <a href="#memo-license">License</a> &#xa0; | &#xa0;
-  <a href="https://github.com/ufrshubham" target="_blank">Author</a>
-</p>
-
-<br>
-
-## :dart: About ##
-
-Dino Run is a 2D infinite side scroller mobile game made in Flutter. This game is made using flame package, an awesome 2D game engine for flutter.
-
-## :rocket: Technologies ##
-
-The following tools were used in this project:
-
-- [Flutter](https://flutter.dev/)
-- [Flame](https://flame-engine.org/)
-
-## :white_check_mark: Requirements ##
-
-Before starting :checkered_flag:, you need to have [Git](https://git-scm.com) and [Flutter](https://flutter.dev/) installed.
-
-## :checkered_flag: Starting ##
+## Build steps
 
 ```bash
 # Clone this project
@@ -76,15 +34,40 @@ $ flutter run
 # The will start the game on any connected device.
 ```
 
-## :memo: License ##
+## Supported platforms
+
+- Android
+- iOS
+- Windows (without audio)
+
+## License
 
 Assets provided in this repo are not owned by my. For more details about their origin and authors, check [assets/images/readme.md](assets/images/readme.md) and [assets/audio/readme.md](assets/audio/readme.md)
 
 This project is under license from MIT. For more details, see the [LICENSE](LICENSE) file.
 
+## Why the code is so different than the YouTube series?
 
-Made with :brain: by <a href="https://github.com/ufrshubham" target="_blank">Ryuzki</a>
+Dino run is a simple mobile game that I originally started making, so that I can learn Flame engine. But while doing so, I couldn't find a lot of up-to date resources (apart of the official docs). So I decided to make a [YouTube series](https://www.youtube.com/playlist?list=PLiZZKL9HLmWOmQgYxWHuOHOWsUUlhCCOY) covering the development of this game.
 
-&#xa0;
+Everything went great and in about 7 weeks I wrapped up the series (actual game completed way sooner than the series). The original game and the YouTube series was made using version 0.28 of Flame (probably latest at that time). But little did I know that Flame was under massive development preparing for the 1.0 release.
 
-<a href="#top">Back to top</a>
+I suspected that my videos were going to get outdated pretty soon with newer versions of Flame. My plan to deal with this was to keep updating this repository with latest changes from Flame, so that new viewers of the series don't get stuck with a code that won't even build. But things got much worst after Flutter went null-safe. I tried migrating this project to null-safety and latest version of Flame multiple times. But I always ended up introducing a lot of bugs in the game.
+
+It was not like this is a very big project and a lot of people are follow it. I was easier to leave this repository in a broken state. But personally, I've been through the frustration of trying to learn something new, spending hours and hours watching some tutorial series only to find out at the end that it is completely outdated. Remaking the whole YouTube series was a big undertaking (which I was not prepared for). But rewriting this game again wasn't that big of a deal. So finally I decided to rewrite the whole thing from scratch (almost), keeping the original code on a separate branch. Surprising it took me only few hours to get it up and running.
+
+To check the original code, checkout the main branch.
+
+## Games inspired from Dino Run
+
+This list might not contain all the project that are inspired from Dino Run, but these are the ones that I know of. If you want to add your game here or know of a game that should be featured here, feel free to open a pull request or send me the required details.
+
+- [Fly Dash](https://play.google.com/store/apps/details?id=io.madhank93.dashy_bird&hl=en_IN) by [Madhan Kumaravelu](https://github.com/madhank93)
+
+- [Warrior Runner](https://play.google.com/store/apps/details?id=hashim4498.games.warrior_runner&hl=en_IN) by [Mohammed Hashim](https://github.com/mohammedhashim44)
+
+- [DinoRun](https://github.com/DetainedDeveloper/DinoRun) by [Jay](https://github.com/DetainedDeveloper)
+
+- [run-dino-run](https://github.com/NextFaze/run-dino-run) by [Rushi Patel](https://github.com/whimzyLive)
+
+- [Dino Running](https://play.google.com/store/apps/details?id=rteixeira.apps.dino_run) by [Renan Teixeira](https://github.com/renant)

@@ -1,4 +1,4 @@
-import 'package:dino_run/models/settings.dart';
+import '/models/settings.dart';
 import 'package:flame/flame.dart';
 import 'package:flame_audio/flame_audio.dart';
 
@@ -14,9 +14,8 @@ class AudioManager {
   /// A getter to access the single instance of [AudioManager].
   static AudioManager get instance => _instance;
 
-  /// This method is responsible for initializing
-  /// [listenableBgm] and [listenableSfx] by reading user preferences.
-  /// It is also responsible for pre-caching given list of [files].
+  /// This method is responsible for initializing caching given list of [files],
+  /// and initilizing settings.
   Future<void> init(List<String> files, Settings settings) async {
     this.settings = settings;
     FlameAudio.bgm.initialize();

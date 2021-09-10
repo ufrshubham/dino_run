@@ -18,15 +18,29 @@ class Hud extends StatelessWidget {
         padding: const EdgeInsets.only(top: 10.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Selector<PlayerData, int>(
-              selector: (_, playerData) => playerData.currentScore,
-              builder: (_, score, __) {
-                return Text(
-                  'Score: $score',
-                  style: TextStyle(fontSize: 20, color: Colors.white),
-                );
-              },
+            Column(
+              children: [
+                Selector<PlayerData, int>(
+                  selector: (_, playerData) => playerData.currentScore,
+                  builder: (_, score, __) {
+                    return Text(
+                      'Score: $score',
+                      style: TextStyle(fontSize: 20, color: Colors.white),
+                    );
+                  },
+                ),
+                Selector<PlayerData, int>(
+                  selector: (_, playerData) => playerData.highScore,
+                  builder: (_, highScore, __) {
+                    return Text(
+                      'High: $highScore',
+                      style: TextStyle(color: Colors.white),
+                    );
+                  },
+                ),
+              ],
             ),
             TextButton(
               onPressed: () {
@@ -37,7 +51,7 @@ class Hud extends StatelessWidget {
               child: Icon(Icons.pause, color: Colors.white),
             ),
             Selector<PlayerData, int>(
-              selector: (_, playerData) => playerData.remainingLives,
+              selector: (_, playerData) => playerData.lives,
               builder: (_, lives, __) {
                 return Row(
                   children: List.generate(5, (index) {

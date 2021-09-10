@@ -1,4 +1,5 @@
 import 'package:dino_run/models/player_data.dart';
+import 'package:dino_run/widgets/game_over_menu.dart';
 import 'package:dino_run/widgets/hud.dart';
 import 'package:dino_run/widgets/main_menu.dart';
 import 'package:dino_run/widgets/pause_menu.dart';
@@ -30,6 +31,12 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Audiowide',
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            fixedSize: Size(150, 50),
+          ),
+        ),
       ),
       home: Scaffold(
         body: GameWidget(
@@ -43,6 +50,7 @@ class MyApp extends StatelessWidget {
             MainMenu.id: (_, DinoRun gameRef) => MainMenu(gameRef),
             PauseMenu.id: (_, DinoRun gameRef) => PauseMenu(gameRef),
             Hud.id: (_, DinoRun gameRef) => Hud(gameRef),
+            GameOverMenu.id: (_, DinoRun gameRef) => GameOverMenu(gameRef),
           },
           initialActiveOverlays: [MainMenu.id],
           game: _dinoRun,

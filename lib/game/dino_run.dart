@@ -1,6 +1,8 @@
 import 'package:dino_run/game/dino.dart';
 import 'package:dino_run/game/enemy_manager.dart';
 import 'package:dino_run/models/player_data.dart';
+import 'package:dino_run/widgets/game_over_menu.dart';
+import 'package:dino_run/widgets/hud.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'package:flame/game.dart';
@@ -61,10 +63,26 @@ class DinoRun extends BaseGame with TapDetector, HasCollidables {
     add(_enemyManager);
   }
 
-  void disconnectActors() {
+  void _disconnectActors() {
     _dino.remove();
     _enemyManager.removeAllEnemies();
     _enemyManager.remove();
+  }
+
+  void reset() {
+    _disconnectActors();
+    playerData.currentScore = 0;
+    playerData.lives = 5;
+  }
+
+  @override
+  void update(double dt) {
+    if (playerData.lives <= 0) {
+      this.overlays.add(GameOverMenu.id);
+      this.overlays.remove(Hud.id);
+      this.pauseEngine();
+    }
+    super.update(dt);
   }
 
   @override

@@ -27,7 +27,14 @@ class MainMenu extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextButton(
+                  Text(
+                    'Dino Run',
+                    style: TextStyle(
+                      fontSize: 50,
+                      color: Colors.white,
+                    ),
+                  ),
+                  ElevatedButton(
                     onPressed: () {
                       gameRef.startGamePlay();
                       gameRef.overlays.remove(MainMenu.id);
@@ -40,7 +47,7 @@ class MainMenu extends StatelessWidget {
                       ),
                     ),
                   ),
-                  TextButton(
+                  ElevatedButton(
                     onPressed: () {},
                     child: Text(
                       'Settings',

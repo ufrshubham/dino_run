@@ -9,13 +9,18 @@ class PlayerData extends ChangeNotifier with HiveObjectMixin {
   int highScore = 0;
 
   int _lives = 5;
-  int get remainingLives => _lives;
+  int get lives => _lives;
+  set lives(int value) {
+    if (value <= 5 && value >= 0) {
+      _lives = value;
+      notifyListeners();
+    }
+  }
 
   int _currentScore = 0;
   int get currentScore => _currentScore;
-
-  void increaseScoreBy(int value) {
-    _currentScore += value;
+  set currentScore(int value) {
+    _currentScore = value;
 
     if (highScore < _currentScore) {
       highScore = _currentScore;
@@ -23,12 +28,5 @@ class PlayerData extends ChangeNotifier with HiveObjectMixin {
 
     notifyListeners();
     save();
-  }
-
-  void reduceLife() {
-    if (_lives > 0) {
-      _lives -= 1;
-      notifyListeners();
-    }
   }
 }

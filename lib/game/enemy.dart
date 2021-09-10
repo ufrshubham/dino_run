@@ -39,6 +39,7 @@ class Enemy extends SpriteAnimationComponent
 
     if (this.position.x < -5) {
       remove();
+      gameRef.playerData.currentScore += 1;
     }
 
     super.update(dt);
@@ -46,7 +47,6 @@ class Enemy extends SpriteAnimationComponent
 
   @override
   void onRemove() {
-    gameRef.playerData.increaseScoreBy(1);
     super.onRemove();
   }
 

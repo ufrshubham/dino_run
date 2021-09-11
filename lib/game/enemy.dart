@@ -23,16 +23,10 @@ class Enemy extends SpriteAnimationComponent
   }
 
   @override
-  Future<void>? onLoad() {
+  void onMount() {
     // Add a hitbox for this enemy.
     final shape = HitboxRectangle(relation: Vector2.all(0.8));
     addShape(shape);
-
-    return super.onLoad();
-  }
-
-  @override
-  void onMount() {
     // Reduce the size of enemy as they look too
     // big compared to the dino.
     this.size *= 0.6;

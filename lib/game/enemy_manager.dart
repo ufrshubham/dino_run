@@ -51,33 +51,37 @@ class EnemyManager extends BaseComponent with HasGameRef<DinoRun> {
   @override
   void onMount() {
     this.shouldRemove = false;
-    // As soon as this component is mounted, initilize all the data.
-    _data.addAll([
-      EnemyData(
-        image: gameRef.images.fromCache('AngryPig/Walk (36x30).png'),
-        nFrames: 16,
-        stepTime: 0.1,
-        textureSize: Vector2(36, 30),
-        speedX: 80,
-        canFly: false,
-      ),
-      EnemyData(
-        image: gameRef.images.fromCache('Bat/Flying (46x30).png'),
-        nFrames: 7,
-        stepTime: 0.1,
-        textureSize: Vector2(46, 30),
-        speedX: 100,
-        canFly: true,
-      ),
-      EnemyData(
-        image: gameRef.images.fromCache('Rino/Run (52x34).png'),
-        nFrames: 6,
-        stepTime: 0.09,
-        textureSize: Vector2(52, 34),
-        speedX: 150,
-        canFly: false,
-      ),
-    ]);
+
+    // Don't fill list again and again on every mount.
+    if (_data.isEmpty) {
+      // As soon as this component is mounted, initilize all the data.
+      _data.addAll([
+        EnemyData(
+          image: gameRef.images.fromCache('AngryPig/Walk (36x30).png'),
+          nFrames: 16,
+          stepTime: 0.1,
+          textureSize: Vector2(36, 30),
+          speedX: 80,
+          canFly: false,
+        ),
+        EnemyData(
+          image: gameRef.images.fromCache('Bat/Flying (46x30).png'),
+          nFrames: 7,
+          stepTime: 0.1,
+          textureSize: Vector2(46, 30),
+          speedX: 100,
+          canFly: true,
+        ),
+        EnemyData(
+          image: gameRef.images.fromCache('Rino/Run (52x34).png'),
+          nFrames: 6,
+          stepTime: 0.09,
+          textureSize: Vector2(52, 34),
+          speedX: 150,
+          canFly: false,
+        ),
+      ]);
+    }
     _timer.start();
     super.onMount();
   }

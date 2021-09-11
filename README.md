@@ -71,3 +71,7 @@ This list might not contain all the project that are inspired from Dino Run, but
 - [run-dino-run](https://github.com/NextFaze/run-dino-run) by [Rushi Patel](https://github.com/whimzyLive)
 
 - [Dino Running](https://play.google.com/store/apps/details?id=rteixeira.apps.dino_run) by [Renan Teixeira](https://github.com/renant)
+
+___
+
+Join my [Discord](https://discord.gg/xHu3aUQGsJ) if you want to discuss something about this project.

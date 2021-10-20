@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:flame/game.dart';
 import 'package:flame/flame.dart';
@@ -35,8 +36,11 @@ Future<void> main() async {
 // This function will initilize hive with apps documents directory.
 // Additionally it will also register all the hive adapters.
 Future<void> initHive() async {
-  final dir = await getApplicationDocumentsDirectory();
-  Hive.init(dir.path);
+  // For web hive does not need to be initialized.
+  if (!kIsWeb) {
+    final dir = await getApplicationDocumentsDirectory();
+    Hive.init(dir.path);
+  }
 
   Hive.registerAdapter<PlayerData>(PlayerDataAdapter());
   Hive.registerAdapter<Settings>(SettingsAdapter());

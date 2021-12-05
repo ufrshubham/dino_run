@@ -9,7 +9,7 @@ class AudioManager {
   AudioManager._internal();
 
   /// [_instance] represents the single static instance of [AudioManager].
-  static AudioManager _instance = AudioManager._internal();
+  static final AudioManager _instance = AudioManager._internal();
 
   /// A getter to access the single instance of [AudioManager].
   static AudioManager get instance => _instance;

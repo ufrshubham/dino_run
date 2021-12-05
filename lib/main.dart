@@ -30,7 +30,7 @@ Future<void> main() async {
 
   // Initializes hive and register the adapters.
   await initHive();
-  runApp(DinoRunApp());
+  runApp(const DinoRunApp());
 }
 
 // This function will initilize hive with apps documents directory.
@@ -48,6 +48,8 @@ Future<void> initHive() async {
 
 // The main widget for this game.
 class DinoRunApp extends StatelessWidget {
+  const DinoRunApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -61,7 +63,7 @@ class DinoRunApp extends StatelessWidget {
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
-            fixedSize: Size(200, 60),
+            fixedSize: const Size(200, 60),
           ),
         ),
       ),
@@ -69,8 +71,8 @@ class DinoRunApp extends StatelessWidget {
         body: GameWidget(
           // This will dislpay a loading bar until [DinoRun] completes
           // its onLoad method.
-          loadingBuilder: (conetxt) => Center(
-            child: Container(
+          loadingBuilder: (conetxt) => const Center(
+            child: SizedBox(
               width: 200,
               child: LinearProgressIndicator(),
             ),
@@ -84,7 +86,7 @@ class DinoRunApp extends StatelessWidget {
             SettingsMenu.id: (_, DinoRun gameRef) => SettingsMenu(gameRef),
           },
           // By default MainMenu overlay will be active.
-          initialActiveOverlays: [MainMenu.id],
+          initialActiveOverlays: const [MainMenu.id],
           game: _dinoRun,
         ),
       ),

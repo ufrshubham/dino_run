@@ -12,7 +12,7 @@ class Enemy extends SpriteAnimationComponent
   final EnemyData enemyData;
 
   Enemy(this.enemyData) {
-    this.animation = SpriteAnimation.fromFrameData(
+    animation = SpriteAnimation.fromFrameData(
       enemyData.image,
       SpriteAnimationData.sequenced(
         amount: enemyData.nFrames,
@@ -29,17 +29,17 @@ class Enemy extends SpriteAnimationComponent
     addShape(shape);
     // Reduce the size of enemy as they look too
     // big compared to the dino.
-    this.size *= 0.6;
+    size *= 0.6;
     super.onMount();
   }
 
   @override
   void update(double dt) {
-    this.position.x -= enemyData.speedX * dt;
+    position.x -= enemyData.speedX * dt;
 
     // Remove the enemy and increase player score
     // by 1, if enemy has gone past left end of the screen.
-    if (this.position.x < -5) {
+    if (position.x < -5) {
       remove();
       gameRef.playerData.currentScore += 1;
     }

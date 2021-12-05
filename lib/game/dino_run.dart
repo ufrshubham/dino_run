@@ -62,7 +62,7 @@ class DinoRun extends BaseGame with TapDetector, HasCollidables {
 
     // Set a fixed viewport to avoid manually scaling
     // and handling different screen sizes.
-    this.viewport = FixedResolutionViewport(Vector2(360, 180));
+    viewport = FixedResolutionViewport(Vector2(360, 180));
 
     /// Create a [ParallaxComponent] and add it to game.
     final parallaxBackground = await loadParallaxComponent(
@@ -116,9 +116,9 @@ class DinoRun extends BaseGame with TapDetector, HasCollidables {
   void update(double dt) {
     // If number of lives is 0 or less, game is over.
     if (playerData.lives <= 0) {
-      this.overlays.add(GameOverMenu.id);
-      this.overlays.remove(Hud.id);
-      this.pauseEngine();
+      overlays.add(GameOverMenu.id);
+      overlays.remove(Hud.id);
+      pauseEngine();
       AudioManager.instance.pauseBgm();
     }
     super.update(dt);
@@ -129,7 +129,7 @@ class DinoRun extends BaseGame with TapDetector, HasCollidables {
   void onTapDown(TapDownInfo info) {
     // Make dino jump only when game is playing.
     // When game is in playing state, only Hud will be the active overlay.
-    if (this.overlays.isActive(Hud.id)) {
+    if (overlays.isActive(Hud.id)) {
       _dino.jump();
     }
     super.onTapDown(info);
@@ -175,9 +175,9 @@ class DinoRun extends BaseGame with TapDetector, HasCollidables {
       case AppLifecycleState.resumed:
         // On resume, if active overlay is not PauseMenu,
         // resume the engine (lets the parallax effect play).
-        if (!(this.overlays.isActive(PauseMenu.id)) &&
-            !(this.overlays.isActive(GameOverMenu.id))) {
-          this.resumeEngine();
+        if (!(overlays.isActive(PauseMenu.id)) &&
+            !(overlays.isActive(GameOverMenu.id))) {
+          resumeEngine();
         }
         break;
       case AppLifecycleState.paused:
@@ -185,11 +185,11 @@ class DinoRun extends BaseGame with TapDetector, HasCollidables {
       case AppLifecycleState.inactive:
         // If game is active, then remove Hud and add PauseMenu
         // before pausing the game.
-        if (this.overlays.isActive(Hud.id)) {
-          this.overlays.remove(Hud.id);
-          this.overlays.add(PauseMenu.id);
+        if (overlays.isActive(Hud.id)) {
+          overlays.remove(Hud.id);
+          overlays.add(PauseMenu.id);
         }
-        this.pauseEngine();
+        pauseEngine();
         break;
     }
     super.lifecycleStateChange(state);

@@ -35,7 +35,7 @@ class Hud extends StatelessWidget {
                   builder: (_, score, __) {
                     return Text(
                       'Score: $score',
-                      style: TextStyle(fontSize: 20, color: Colors.white),
+                      style: const TextStyle(fontSize: 20, color: Colors.white),
                     );
                   },
                 ),
@@ -44,7 +44,7 @@ class Hud extends StatelessWidget {
                   builder: (_, highScore, __) {
                     return Text(
                       'High: $highScore',
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                     );
                   },
                 ),
@@ -57,7 +57,7 @@ class Hud extends StatelessWidget {
                 gameRef.pauseEngine();
                 AudioManager.instance.pauseBgm();
               },
-              child: Icon(Icons.pause, color: Colors.white),
+              child: const Icon(Icons.pause, color: Colors.white),
             ),
             Selector<PlayerData, int>(
               selector: (_, playerData) => playerData.lives,
@@ -65,12 +65,12 @@ class Hud extends StatelessWidget {
                 return Row(
                   children: List.generate(5, (index) {
                     if (index < lives) {
-                      return Icon(
+                      return const Icon(
                         Icons.favorite,
                         color: Colors.red,
                       );
                     } else {
-                      return Icon(
+                      return const Icon(
                         Icons.favorite_border,
                         color: Colors.red,
                       );

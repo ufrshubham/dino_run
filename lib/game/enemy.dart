@@ -39,7 +39,7 @@ class Enemy extends SpriteAnimationComponent
 
     // Remove the enemy and increase player score
     // by 1, if enemy has gone past left end of the screen.
-    if (position.x < -5) {
+    if (position.x < -enemyData.textureSize.x) {
       remove();
       gameRef.playerData.currentScore += 1;
     }

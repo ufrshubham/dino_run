@@ -33,7 +33,7 @@ class MainMenu extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     'Dino Run',
                     style: TextStyle(
                       fontSize: 50,
@@ -46,7 +46,7 @@ class MainMenu extends StatelessWidget {
                       gameRef.overlays.remove(MainMenu.id);
                       gameRef.overlays.add(Hud.id);
                     },
-                    child: Text(
+                    child: const Text(
                       'Play',
                       style: TextStyle(
                         fontSize: 30,
@@ -58,7 +58,7 @@ class MainMenu extends StatelessWidget {
                       gameRef.overlays.remove(MainMenu.id);
                       gameRef.overlays.add(SettingsMenu.id);
                     },
-                    child: Text(
+                    child: const Text(
                       'Settings',
                       style: TextStyle(
                         fontSize: 30,

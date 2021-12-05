@@ -10,11 +10,11 @@ import '/models/player_data.dart';
 
 /// This enum represents the animation states of [Dino].
 enum DinoAnimationStates {
-  Idle,
-  Run,
-  Kick,
-  Hit,
-  Sprint,
+  idle,
+  run,
+  kick,
+  hit,
+  sprint,
 }
 
 // This represents the dino character of this game.
@@ -22,30 +22,30 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
     with Hitbox, Collidable, HasGameRef<DinoRun> {
   // A map of all the animation states and their corresponding animations.
   static final _animationMap = {
-    DinoAnimationStates.Idle: SpriteAnimationData.sequenced(
+    DinoAnimationStates.idle: SpriteAnimationData.sequenced(
       amount: 4,
       stepTime: 0.1,
       textureSize: Vector2.all(24),
     ),
-    DinoAnimationStates.Run: SpriteAnimationData.sequenced(
+    DinoAnimationStates.run: SpriteAnimationData.sequenced(
       amount: 6,
       stepTime: 0.1,
       textureSize: Vector2.all(24),
       texturePosition: Vector2((4) * 24, 0),
     ),
-    DinoAnimationStates.Kick: SpriteAnimationData.sequenced(
+    DinoAnimationStates.kick: SpriteAnimationData.sequenced(
       amount: 4,
       stepTime: 0.1,
       textureSize: Vector2.all(24),
       texturePosition: Vector2((4 + 6) * 24, 0),
     ),
-    DinoAnimationStates.Hit: SpriteAnimationData.sequenced(
+    DinoAnimationStates.hit: SpriteAnimationData.sequenced(
       amount: 3,
       stepTime: 0.1,
       textureSize: Vector2.all(24),
       texturePosition: Vector2((4 + 6 + 4) * 24, 0),
     ),
-    DinoAnimationStates.Sprint: SpriteAnimationData.sequenced(
+    DinoAnimationStates.sprint: SpriteAnimationData.sequenced(
       amount: 7,
       stepTime: 0.1,
       textureSize: Vector2.all(24),
@@ -61,9 +61,9 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
   double speedY = 0.0;
 
   // Controlls how long the hit animations will be played.
-  Timer _hitTimer = Timer(1);
+  final Timer _hitTimer = Timer(1);
 
-  static const double GRAVITY = 800;
+  static const double gravity = 800;
 
   final PlayerData playerData;
 
@@ -76,17 +76,17 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
   void onMount() {
     // First reset all the important properties, because onMount()
     // will be called even while restarting the game.
-    this._reset();
+    _reset();
 
     // Add a hitbox for dino.
     final shape = HitboxRectangle(relation: Vector2(0.5, 0.7));
     addShape(shape);
-    yMax = this.y;
+    yMax = y;
 
     /// Set the callback for [_hitTimer].
     _hitTimer.callback = () {
-      this.current = DinoAnimationStates.Run;
-      this.isHit = false;
+      current = DinoAnimationStates.run;
+      isHit = false;
     };
 
     super.onMount();
@@ -95,18 +95,18 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
   @override
   void update(double dt) {
     // v = u + at
-    this.speedY += GRAVITY * dt;
+    speedY += gravity * dt;
 
     // d = s0 + s * t
-    this.y += this.speedY * dt;
+    y += speedY * dt;
 
     /// This code makes sure that dino never goes beyond [yMax].
     if (isOnGround) {
-      this.y = this.yMax;
-      this.speedY = 0.0;
-      if ((this.current != DinoAnimationStates.Hit) &&
-          (this.current != DinoAnimationStates.Run)) {
-        this.current = DinoAnimationStates.Run;
+      y = yMax;
+      speedY = 0.0;
+      if ((current != DinoAnimationStates.hit) &&
+          (current != DinoAnimationStates.run)) {
+        current = DinoAnimationStates.run;
       }
     }
 
@@ -120,31 +120,31 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
     // Call hit only if other component is an Enemy and dino
     // is not already in hit state.
     if ((other is Enemy) && (!isHit)) {
-      this.hit();
+      hit();
     }
     super.onCollision(intersectionPoints, other);
   }
 
   // Returns true if dino is on ground.
-  bool get isOnGround => (this.y >= this.yMax);
+  bool get isOnGround => (y >= yMax);
 
   // Makes the dino jump.
   void jump() {
     // Jump only if dino is on ground.
     if (isOnGround) {
-      this.speedY = -300;
-      this.current = DinoAnimationStates.Idle;
+      speedY = -300;
+      current = DinoAnimationStates.idle;
       AudioManager.instance.playSfx('jump14.wav');
     }
   }
 
   // This method changes the animation state to
-  /// [DinoAnimationStates.Hit], plays the hit sound
+  /// [DinoAnimationStates.hit], plays the hit sound
   /// effect and reduces the player life by 1.
   void hit() {
-    this.isHit = true;
+    isHit = true;
     AudioManager.instance.playSfx('hurt7.wav');
-    this.current = DinoAnimationStates.Hit;
+    current = DinoAnimationStates.hit;
     _hitTimer.start();
     playerData.lives -= 1;
   }
@@ -152,12 +152,12 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
   // This method reset some of the important properties
   // of this component back to normal.
   void _reset() {
-    this.shouldRemove = false;
-    this.anchor = Anchor.bottomLeft;
-    this.position = Vector2(32, gameRef.size.y - 22);
-    this.size = Vector2.all(24);
-    this.current = DinoAnimationStates.Run;
-    this.isHit = false;
+    shouldRemove = false;
+    anchor = Anchor.bottomLeft;
+    position = Vector2(32, gameRef.size.y - 22);
+    size = Vector2.all(24);
+    current = DinoAnimationStates.run;
+    isHit = false;
     speedY = 0.0;
   }
 }

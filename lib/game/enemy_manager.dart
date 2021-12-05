@@ -13,10 +13,10 @@ class EnemyManager extends BaseComponent with HasGameRef<DinoRun> {
   final List<EnemyData> _data = [];
 
   // Random generator required for randomly selecting enemy type.
-  Random _random = Random();
+  final Random _random = Random();
 
   // Timer to decide when to spawn next enemy.
-  Timer _timer = Timer(2, repeat: true);
+  final Timer _timer = Timer(2, repeat: true);
 
   EnemyManager() {
     _timer.callback = spawnRandomEnemy;
@@ -50,7 +50,7 @@ class EnemyManager extends BaseComponent with HasGameRef<DinoRun> {
 
   @override
   void onMount() {
-    this.shouldRemove = false;
+    shouldRemove = false;
 
     // Don't fill list again and again on every mount.
     if (_data.isEmpty) {
@@ -94,6 +94,8 @@ class EnemyManager extends BaseComponent with HasGameRef<DinoRun> {
 
   void removeAllEnemies() {
     final enemies = gameRef.components.whereType<Enemy>();
-    enemies.forEach((element) => element.remove());
+    for (var element in enemies) {
+      element.remove;
+    }
   }
 }

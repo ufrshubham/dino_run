@@ -25,7 +25,7 @@ class SettingsMenu extends StatelessWidget {
       child: Center(
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-          child: Container(
+          child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.8,
             height: MediaQuery.of(context).size.height * 0.8,
             child: Card(
@@ -42,7 +42,7 @@ class SettingsMenu extends StatelessWidget {
                       selector: (_, settings) => settings.bgm,
                       builder: (context, bgm, __) {
                         return SwitchListTile(
-                          title: Text(
+                          title: const Text(
                             'Music',
                             style: TextStyle(
                               fontSize: 30,
@@ -67,7 +67,7 @@ class SettingsMenu extends StatelessWidget {
                       selector: (_, settings) => settings.sfx,
                       builder: (context, sfx, __) {
                         return SwitchListTile(
-                          title: Text(
+                          title: const Text(
                             'Effects',
                             style: TextStyle(
                               fontSize: 30,
@@ -87,7 +87,7 @@ class SettingsMenu extends StatelessWidget {
                         gameRef.overlays.remove(SettingsMenu.id);
                         gameRef.overlays.add(MainMenu.id);
                       },
-                      child: Icon(Icons.arrow_back_ios_rounded),
+                      child: const Icon(Icons.arrow_back_ios_rounded),
                     ),
                   ],
                 ),

@@ -39,7 +39,7 @@ class GameOverMenu extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       'Game Over',
                       style: TextStyle(fontSize: 40, color: Colors.white),
                     ),
@@ -48,12 +48,13 @@ class GameOverMenu extends StatelessWidget {
                       builder: (_, score, __) {
                         return Text(
                           'You Score: $score',
-                          style: TextStyle(fontSize: 40, color: Colors.white),
+                          style: const TextStyle(
+                              fontSize: 40, color: Colors.white),
                         );
                       },
                     ),
                     ElevatedButton(
-                      child: Text(
+                      child: const Text(
                         'Restart',
                         style: TextStyle(
                           fontSize: 30,
@@ -69,7 +70,7 @@ class GameOverMenu extends StatelessWidget {
                       },
                     ),
                     ElevatedButton(
-                      child: Text(
+                      child: const Text(
                         'Exit',
                         style: TextStyle(
                           fontSize: 30,

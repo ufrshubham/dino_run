@@ -8,7 +8,7 @@ import '/models/enemy_data.dart';
 
 // This class is responsible for spawning random enemies at certain
 // interval of time depending upon players current score.
-class EnemyManager extends BaseComponent with HasGameRef<DinoRun> {
+class EnemyManager extends Component with HasGameRef<DinoRun> {
   // A list to hold data for all the enemies.
   final List<EnemyData> _data = [];
 
@@ -19,7 +19,7 @@ class EnemyManager extends BaseComponent with HasGameRef<DinoRun> {
   final Timer _timer = Timer(2, repeat: true);
 
   EnemyManager() {
-    _timer.callback = spawnRandomEnemy;
+    _timer.onTick = spawnRandomEnemy;
   }
 
   // This method is responsible for spawning a random enemy.
@@ -93,7 +93,7 @@ class EnemyManager extends BaseComponent with HasGameRef<DinoRun> {
   }
 
   void removeAllEnemies() {
-    final enemies = gameRef.components.whereType<Enemy>();
+    final enemies = gameRef.children.whereType<Enemy>();
     for (var element in enemies) {
       element.remove;
     }

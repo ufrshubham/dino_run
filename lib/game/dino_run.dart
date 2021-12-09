@@ -1,10 +1,9 @@
 import 'package:flame/game.dart';
+import 'package:flame/input.dart';
 import 'package:hive/hive.dart';
-import 'package:flame/gestures.dart';
 import 'package:flame/parallax.dart';
 import 'package:flutter/material.dart';
 import 'package:flame/components.dart';
-import 'package:flame/extensions.dart';
 
 import '/game/dino.dart';
 import '/widgets/hud.dart';
@@ -16,7 +15,7 @@ import '/widgets/pause_menu.dart';
 import '/widgets/game_over_menu.dart';
 
 // This is the main flame game class.
-class DinoRun extends BaseGame with TapDetector, HasCollidables {
+class DinoRun extends FlameGame with TapDetector, HasCollidables {
   // List of all the image assets.
   static const _imageAssets = [
     'DinoSprites - tard.png',
@@ -62,7 +61,7 @@ class DinoRun extends BaseGame with TapDetector, HasCollidables {
 
     // Set a fixed viewport to avoid manually scaling
     // and handling different screen sizes.
-    viewport = FixedResolutionViewport(Vector2(360, 180));
+    camera.viewport = FixedResolutionViewport(Vector2(360, 180));
 
     /// Create a [ParallaxComponent] and add it to game.
     final parallaxBackground = await loadParallaxComponent(
@@ -96,9 +95,9 @@ class DinoRun extends BaseGame with TapDetector, HasCollidables {
 
   // This method remove all the actors from the game.
   void _disconnectActors() {
-    _dino.remove();
+    _dino.removeFromParent();
     _enemyManager.removeAllEnemies();
-    _enemyManager.remove();
+    _enemyManager.removeFromParent();
   }
 
   // This method reset the whole game world to initial state.

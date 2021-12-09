@@ -19,7 +19,7 @@ enum DinoAnimationStates {
 
 // This represents the dino character of this game.
 class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
-    with Hitbox, Collidable, HasGameRef<DinoRun> {
+    with HasHitboxes, Collidable, HasGameRef<DinoRun> {
   // A map of all the animation states and their corresponding animations.
   static final _animationMap = {
     DinoAnimationStates.idle: SpriteAnimationData.sequenced(
@@ -80,11 +80,11 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
 
     // Add a hitbox for dino.
     final shape = HitboxRectangle(relation: Vector2(0.5, 0.7));
-    addShape(shape);
+    addHitbox(shape);
     yMax = y;
 
     /// Set the callback for [_hitTimer].
-    _hitTimer.callback = () {
+    _hitTimer.onTick = () {
       current = DinoAnimationStates.run;
       isHit = false;
     };

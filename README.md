@@ -54,9 +54,9 @@ Everything went great and in about 7 weeks I wrapped up the series (actual game 
 
 I suspected that my videos were going to get outdated pretty soon with newer versions of Flame. My plan to deal with this was to keep updating this repository with latest changes from Flame, so that new viewers of the series don't get stuck with a code that won't even build. But things got much worst after Flutter went null-safe. I tried migrating this project to null-safety and latest version of Flame multiple times. But I always ended up introducing a lot of bugs in the game.
 
-It was not like this is a very big project and a lot of people are follow it. I was easier to leave this repository in a broken state. But personally, I've been through the frustration of trying to learn something new, spending hours and hours watching some tutorial series only to find out at the end that it is completely outdated. Remaking the whole YouTube series was a big undertaking (which I was not prepared for). But rewriting this game again wasn't that big of a deal. So finally I decided to rewrite the whole thing from scratch (almost), keeping the original code on a separate branch. Surprising it took me only few hours to get it up and running.
+It was not like this is a very big project and a lot of people are follow it. I was easier to leave this repository in a broken state. But personally, I've been through the frustration of trying to learn something new, spending hours and hours watching some tutorial series only to find out at the end that it is completely outdated. Remaking the whole YouTube series is a big undertaking (which I am not prepared for). But rewriting this game again wasn't that big of a deal. So finally I decided to rewrite the whole thing from scratch (almost), keeping the original code on a separate branch. Surprising it took me only few hours to get it up and running.
 
-To check the original code, checkout the main branch.
+To check the original code, checkout the [main](https://github.com/ufrshubham/dino_run/tree/main) branch.
 
 ## Games inspired from Dino Run
 

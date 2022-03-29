@@ -15,7 +15,7 @@ import '/widgets/pause_menu.dart';
 import '/widgets/game_over_menu.dart';
 
 // This is the main flame game class.
-class DinoRun extends FlameGame with TapDetector, HasCollidables {
+class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
   // List of all the image assets.
   static const _imageAssets = [
     'DinoSprites - tard.png',
@@ -78,17 +78,15 @@ class DinoRun extends FlameGame with TapDetector, HasCollidables {
     );
     add(parallaxBackground);
 
-    // Create the main hero of this game.
-    _dino = Dino(images.fromCache('DinoSprites - tard.png'), playerData);
-    // Create an enemy manager.
-    _enemyManager = EnemyManager();
-
     return super.onLoad();
   }
 
   /// This method add the already created [Dino]
   /// and [EnemyManager] to this game.
   void startGamePlay() {
+    _dino = Dino(images.fromCache('DinoSprites - tard.png'), playerData);
+    _enemyManager = EnemyManager();
+
     add(_dino);
     add(_enemyManager);
   }

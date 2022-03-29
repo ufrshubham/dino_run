@@ -50,7 +50,9 @@ class EnemyManager extends Component with HasGameRef<DinoRun> {
 
   @override
   void onMount() {
-    shouldRemove = false;
+    if (isMounted) {
+      shouldRemove = false;
+    }
 
     // Don't fill list again and again on every mount.
     if (_data.isEmpty) {
@@ -94,8 +96,8 @@ class EnemyManager extends Component with HasGameRef<DinoRun> {
 
   void removeAllEnemies() {
     final enemies = gameRef.children.whereType<Enemy>();
-    for (var element in enemies) {
-      element.remove;
+    for (var enemy in enemies) {
+      enemy.removeFromParent();
     }
   }
 }

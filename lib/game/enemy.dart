@@ -1,4 +1,4 @@
-import 'package:flame/geometry.dart';
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
 import '/game/dino_run.dart';
@@ -6,7 +6,7 @@ import '/models/enemy_data.dart';
 
 // This represents an enemy in the game world.
 class Enemy extends SpriteAnimationComponent
-    with HasHitboxes, Collidable, HasGameRef<DinoRun> {
+    with CollisionCallbacks, HasGameRef<DinoRun> {
   // The data required for creation of this enemy.
   final EnemyData enemyData;
 
@@ -23,12 +23,19 @@ class Enemy extends SpriteAnimationComponent
 
   @override
   void onMount() {
-    // Add a hitbox for this enemy.
-    final shape = HitboxRectangle(relation: Vector2.all(0.8));
-    addHitbox(shape);
     // Reduce the size of enemy as they look too
     // big compared to the dino.
     size *= 0.6;
+
+    // Add a hitbox for this enemy.
+    add(
+      RectangleHitbox.relative(
+        Vector2.all(0.8),
+        parentSize: size,
+        anchor: Anchor.center,
+        position: size / 2,
+      ),
+    );
     super.onMount();
   }
 

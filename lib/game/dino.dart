@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:flame/geometry.dart';
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
 import '/game/enemy.dart';
@@ -19,7 +19,7 @@ enum DinoAnimationStates {
 
 // This represents the dino character of this game.
 class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
-    with HasHitboxes, Collidable, HasGameRef<DinoRun> {
+    with CollisionCallbacks, HasGameRef<DinoRun> {
   // A map of all the animation states and their corresponding animations.
   static final _animationMap = {
     DinoAnimationStates.idle: SpriteAnimationData.sequenced(
@@ -79,8 +79,14 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
     _reset();
 
     // Add a hitbox for dino.
-    final shape = HitboxRectangle(relation: Vector2(0.5, 0.7));
-    addHitbox(shape);
+    add(
+      RectangleHitbox.relative(
+        Vector2(0.5, 0.7),
+        parentSize: size,
+        anchor: Anchor.center,
+        position: size / 2,
+      ),
+    );
     yMax = y;
 
     /// Set the callback for [_hitTimer].
@@ -116,7 +122,7 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
 
   // Gets called when dino collides with other Collidables.
   @override
-  void onCollision(Set<Vector2> intersectionPoints, Collidable other) {
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     // Call hit only if other component is an Enemy and dino
     // is not already in hit state.
     if ((other is Enemy) && (!isHit)) {
@@ -152,7 +158,9 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
   // This method reset some of the important properties
   // of this component back to normal.
   void _reset() {
-    shouldRemove = false;
+    if (isMounted) {
+      shouldRemove = false;
+    }
     anchor = Anchor.bottomLeft;
     position = Vector2(32, gameRef.size.y - 22);
     size = Vector2.all(24);

@@ -83,8 +83,7 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
       RectangleHitbox.relative(
         Vector2(0.5, 0.7),
         parentSize: size,
-        anchor: Anchor.center,
-        position: size / 2,
+        position: Vector2(size.x * 0.5, size.y * 0.3) / 2,
       ),
     );
     yMax = y;

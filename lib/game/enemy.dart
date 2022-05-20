@@ -32,8 +32,7 @@ class Enemy extends SpriteAnimationComponent
       RectangleHitbox.relative(
         Vector2.all(0.8),
         parentSize: size,
-        anchor: Anchor.center,
-        position: size / 2,
+        position: Vector2(size.x * 0.2, size.y * 0.2) / 2,
       ),
     );
     super.onMount();

@@ -51,7 +51,7 @@ class EnemyManager extends Component with HasGameRef<DinoRun> {
   @override
   void onMount() {
     if (isMounted) {
-      shouldRemove = false;
+      removeFromParent();
     }
 
     // Don't fill list again and again on every mount.

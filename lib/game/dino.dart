@@ -158,7 +158,7 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
   // of this component back to normal.
   void _reset() {
     if (isMounted) {
-      shouldRemove = false;
+      removeFromParent();
     }
     anchor = Anchor.bottomLeft;
     position = Vector2(32, gameRef.size.y - 22);

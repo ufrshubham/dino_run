@@ -51,7 +51,7 @@ class AudioManager {
   // Plays the given audio file once.
   void playSfx(String fileName) {
     if (settings.sfx) {
-      FlameAudio.audioCache.play(fileName);
+      FlameAudio.play(fileName);
     }
   }
 }

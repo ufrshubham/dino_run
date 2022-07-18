@@ -32,7 +32,7 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
 
   // List of all the audio assets.
   static const _audioAssets = [
-    '8Bit Platformer Loop.wav',
+    '8BitPlatformerLoop.wav',
     'hurt7.wav',
     'jump14.wav',
   ];
@@ -54,7 +54,7 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
 
     // Start playing background music. Internally takes care
     // of checking user settings.
-    AudioManager.instance.startBgm('8Bit Platformer Loop.wav');
+    AudioManager.instance.startBgm('8BitPlatformerLoop.wav');
 
     // Cache all the images.
     await images.loadAll(_imageAssets);

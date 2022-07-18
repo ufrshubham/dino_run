@@ -2,7 +2,7 @@
 
 ## BGM
 
-- [8Bit Platformer Loop.wav](8Bit%20Platformer%20Loop.wav)
+- [8BitPlatformerLoop.wav](8Bit%20Platformer%20Loop.wav)
   - Author: <https://timbeek.itch.io/>
   - Link: <https://timbeek.itch.io/royalty-free-music-pack>
 

@@ -61,6 +61,7 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
 
     // Set a fixed viewport to avoid manually scaling
     // and handling different screen sizes.
+    // ignore: deprecated_member_use
     camera.viewport = FixedResolutionViewport(Vector2(360, 180));
 
     /// Create a [ParallaxComponent] and add it to game.

@@ -14,14 +14,14 @@ class Hud extends StatelessWidget {
   static const id = 'Hud';
 
   // Reference to parent game.
-  final DinoRun gameRef;
+  final DinoRun game;
 
-  const Hud(this.gameRef, {Key? key}) : super(key: key);
+  const Hud(this.game, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
-      value: gameRef.playerData,
+      value: game.playerData,
       child: Padding(
         padding: const EdgeInsets.only(top: 10.0),
         child: Row(
@@ -52,9 +52,9 @@ class Hud extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                gameRef.overlays.remove(Hud.id);
-                gameRef.overlays.add(PauseMenu.id);
-                gameRef.pauseEngine();
+                game.overlays.remove(Hud.id);
+                game.overlays.add(PauseMenu.id);
+                game.pauseEngine();
                 AudioManager.instance.pauseBgm();
               },
               child: const Icon(Icons.pause, color: Colors.white),

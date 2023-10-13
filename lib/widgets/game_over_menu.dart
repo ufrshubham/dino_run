@@ -16,14 +16,14 @@ class GameOverMenu extends StatelessWidget {
   static const id = 'GameOverMenu';
 
   // Reference to parent game.
-  final DinoRun gameRef;
+  final DinoRun game;
 
-  const GameOverMenu(this.gameRef, {Key? key}) : super(key: key);
+  const GameOverMenu(this.game, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
-      value: gameRef.playerData,
+      value: game.playerData,
       child: Center(
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
@@ -63,11 +63,11 @@ class GameOverMenu extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        gameRef.overlays.remove(GameOverMenu.id);
-                        gameRef.overlays.add(Hud.id);
-                        gameRef.resumeEngine();
-                        gameRef.reset();
-                        gameRef.startGamePlay();
+                        game.overlays.remove(GameOverMenu.id);
+                        game.overlays.add(Hud.id);
+                        game.resumeEngine();
+                        game.reset();
+                        game.startGamePlay();
                         AudioManager.instance.resumeBgm();
                       },
                     ),
@@ -79,10 +79,10 @@ class GameOverMenu extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        gameRef.overlays.remove(GameOverMenu.id);
-                        gameRef.overlays.add(MainMenu.id);
-                        gameRef.resumeEngine();
-                        gameRef.reset();
+                        game.overlays.remove(GameOverMenu.id);
+                        game.overlays.add(MainMenu.id);
+                        game.resumeEngine();
+                        game.reset();
                         AudioManager.instance.resumeBgm();
                       },
                     ),

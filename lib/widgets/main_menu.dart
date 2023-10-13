@@ -12,9 +12,9 @@ class MainMenu extends StatelessWidget {
   static const id = 'MainMenu';
 
   // Reference to parent game.
-  final DinoRun gameRef;
+  final DinoRun game;
 
-  const MainMenu(this.gameRef, {Key? key}) : super(key: key);
+  const MainMenu(this.game, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,9 +44,9 @@ class MainMenu extends StatelessWidget {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      gameRef.startGamePlay();
-                      gameRef.overlays.remove(MainMenu.id);
-                      gameRef.overlays.add(Hud.id);
+                      game.startGamePlay();
+                      game.overlays.remove(MainMenu.id);
+                      game.overlays.add(Hud.id);
                     },
                     child: const Text(
                       'Play',
@@ -57,8 +57,8 @@ class MainMenu extends StatelessWidget {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      gameRef.overlays.remove(MainMenu.id);
-                      gameRef.overlays.add(SettingsMenu.id);
+                      game.overlays.remove(MainMenu.id);
+                      game.overlays.add(SettingsMenu.id);
                     },
                     child: const Text(
                       'Settings',

@@ -19,7 +19,7 @@ enum DinoAnimationStates {
 
 // This represents the dino character of this game.
 class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
-    with CollisionCallbacks, HasGameRef<DinoRun> {
+    with CollisionCallbacks, HasGameReference<DinoRun> {
   // A map of all the animation states and their corresponding animations.
   static final _animationMap = {
     DinoAnimationStates.idle: SpriteAnimationData.sequenced(
@@ -161,7 +161,7 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
       removeFromParent();
     }
     anchor = Anchor.bottomLeft;
-    position = Vector2(32, gameRef.size.y - 22);
+    position = Vector2(32, game.virtualSize.y - 22);
     size = Vector2.all(24);
     current = DinoAnimationStates.run;
     isHit = false;

@@ -1,7 +1,7 @@
+import 'package:flame/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:flame/game.dart';
-import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -14,19 +14,11 @@ import 'widgets/pause_menu.dart';
 import 'widgets/settings_menu.dart';
 import 'widgets/game_over_menu.dart';
 
-/// This is the single instance of [DinoRun] which
-/// will be reused throughout the lifecycle of the game.
-DinoRun _dinoRun = DinoRun();
-
 Future<void> main() async {
   // Ensures that all bindings are initialized
   // before was start calling hive and flame code
   // dealing with platform channels.
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Makes the game full screen and landscape only.
-  Flame.device.fullScreen();
-  Flame.device.setLandscape();
 
   // Initializes hive and register the adapters.
   await initHive();
@@ -68,7 +60,7 @@ class DinoRunApp extends StatelessWidget {
         ),
       ),
       home: Scaffold(
-        body: GameWidget(
+        body: GameWidget<DinoRun>.controlled(
           // This will dislpay a loading bar until [DinoRun] completes
           // its onLoad method.
           loadingBuilder: (conetxt) => const Center(
@@ -79,15 +71,22 @@ class DinoRunApp extends StatelessWidget {
           ),
           // Register all the overlays that will be used by this game.
           overlayBuilderMap: {
-            MainMenu.id: (_, DinoRun gameRef) => MainMenu(gameRef),
-            PauseMenu.id: (_, DinoRun gameRef) => PauseMenu(gameRef),
-            Hud.id: (_, DinoRun gameRef) => Hud(gameRef),
-            GameOverMenu.id: (_, DinoRun gameRef) => GameOverMenu(gameRef),
-            SettingsMenu.id: (_, DinoRun gameRef) => SettingsMenu(gameRef),
+            MainMenu.id: (_, game) => MainMenu(game),
+            PauseMenu.id: (_, game) => PauseMenu(game),
+            Hud.id: (_, game) => Hud(game),
+            GameOverMenu.id: (_, game) => GameOverMenu(game),
+            SettingsMenu.id: (_, game) => SettingsMenu(game),
           },
           // By default MainMenu overlay will be active.
           initialActiveOverlays: const [MainMenu.id],
-          game: _dinoRun,
+          gameFactory: () => DinoRun(
+            // Use a fixed resolution camera to avoid manually
+            // scaling and handling different screen sizes.
+            camera: CameraComponent.withFixedResolution(
+              width: 360,
+              height: 180,
+            ),
+          ),
         ),
       ),
     );

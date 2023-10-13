@@ -15,14 +15,14 @@ class PauseMenu extends StatelessWidget {
   static const id = 'PauseMenu';
 
   // Reference to parent game.
-  final DinoRun gameRef;
+  final DinoRun game;
 
-  const PauseMenu(this.gameRef, {Key? key}) : super(key: key);
+  const PauseMenu(this.game, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
-      value: gameRef.playerData,
+      value: game.playerData,
       child: Center(
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
@@ -55,9 +55,9 @@ class PauseMenu extends StatelessWidget {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        gameRef.overlays.remove(PauseMenu.id);
-                        gameRef.overlays.add(Hud.id);
-                        gameRef.resumeEngine();
+                        game.overlays.remove(PauseMenu.id);
+                        game.overlays.add(Hud.id);
+                        game.resumeEngine();
                         AudioManager.instance.resumeBgm();
                       },
                       child: const Text(
@@ -69,11 +69,11 @@ class PauseMenu extends StatelessWidget {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        gameRef.overlays.remove(PauseMenu.id);
-                        gameRef.overlays.add(Hud.id);
-                        gameRef.resumeEngine();
-                        gameRef.reset();
-                        gameRef.startGamePlay();
+                        game.overlays.remove(PauseMenu.id);
+                        game.overlays.add(Hud.id);
+                        game.resumeEngine();
+                        game.reset();
+                        game.startGamePlay();
                         AudioManager.instance.resumeBgm();
                       },
                       child: const Text(
@@ -85,10 +85,10 @@ class PauseMenu extends StatelessWidget {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        gameRef.overlays.remove(PauseMenu.id);
-                        gameRef.overlays.add(MainMenu.id);
-                        gameRef.resumeEngine();
-                        gameRef.reset();
+                        game.overlays.remove(PauseMenu.id);
+                        game.overlays.add(MainMenu.id);
+                        game.resumeEngine();
+                        game.reset();
                         AudioManager.instance.resumeBgm();
                       },
                       child: const Text(

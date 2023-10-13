@@ -1,3 +1,5 @@
+import 'package:flame/events.dart';
+import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:hive/hive.dart';
@@ -16,6 +18,8 @@ import '/widgets/game_over_menu.dart';
 
 // This is the main flame game class.
 class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
+  DinoRun({super.camera});
+
   // List of all the image assets.
   static const _imageAssets = [
     'DinoSprites - tard.png',
@@ -42,9 +46,15 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
   late PlayerData playerData;
   late EnemyManager _enemyManager;
 
+  Vector2 get virtualSize => camera.viewport.virtualSize;
+
   // This method get called while flame is preparing this game.
   @override
   Future<void> onLoad() async {
+    // Makes the game full screen and landscape only.
+    await Flame.device.fullScreen();
+    await Flame.device.setLandscape();
+
     /// Read [PlayerData] and [Settings] from hive.
     playerData = await _readPlayerData();
     settings = await _readSettings();
@@ -59,10 +69,8 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
     // Cache all the images.
     await images.loadAll(_imageAssets);
 
-    // Set a fixed viewport to avoid manually scaling
-    // and handling different screen sizes.
-    // ignore: deprecated_member_use
-    camera.viewport = FixedResolutionViewport(Vector2(360, 180));
+    // This makes the camera look at the center of the viewport.
+    camera.viewfinder.position = camera.viewport.virtualSize * 0.5;
 
     /// Create a [ParallaxComponent] and add it to game.
     final parallaxBackground = await loadParallaxComponent(
@@ -77,9 +85,9 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
       baseVelocity: Vector2(10, 0),
       velocityMultiplierDelta: Vector2(1.4, 0),
     );
-    add(parallaxBackground);
 
-    return super.onLoad();
+    // Add the parallax as the backdrop.
+    camera.backdrop.add(parallaxBackground);
   }
 
   /// This method add the already created [Dino]
@@ -88,8 +96,8 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
     _dino = Dino(images.fromCache('DinoSprites - tard.png'), playerData);
     _enemyManager = EnemyManager();
 
-    add(_dino);
-    add(_enemyManager);
+    world.add(_dino);
+    world.add(_enemyManager);
   }
 
   // This method remove all the actors from the game.
@@ -181,6 +189,7 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
       case AppLifecycleState.paused:
       case AppLifecycleState.detached:
       case AppLifecycleState.inactive:
+      case AppLifecycleState.hidden:
         // If game is active, then remove Hud and add PauseMenu
         // before pausing the game.
         if (overlays.isActive(Hud.id)) {

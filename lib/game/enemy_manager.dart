@@ -8,7 +8,7 @@ import '/models/enemy_data.dart';
 
 // This class is responsible for spawning random enemies at certain
 // interval of time depending upon players current score.
-class EnemyManager extends Component with HasGameRef<DinoRun> {
+class EnemyManager extends Component with HasGameReference<DinoRun> {
   // A list to hold data for all the enemies.
   final List<EnemyData> _data = [];
 
@@ -32,8 +32,8 @@ class EnemyManager extends Component with HasGameRef<DinoRun> {
     // Help in setting all enemies on ground.
     enemy.anchor = Anchor.bottomLeft;
     enemy.position = Vector2(
-      gameRef.size.x + 32,
-      gameRef.size.y - 24,
+      game.virtualSize.x + 32,
+      game.virtualSize.y - 24,
     );
 
     // If this enemy can fly, set its y position randomly.
@@ -45,7 +45,7 @@ class EnemyManager extends Component with HasGameRef<DinoRun> {
     // Due to the size of our viewport, we can
     // use textureSize as size for the components.
     enemy.size = enemyData.textureSize;
-    gameRef.add(enemy);
+    game.world.add(enemy);
   }
 
   @override
@@ -59,7 +59,7 @@ class EnemyManager extends Component with HasGameRef<DinoRun> {
       // As soon as this component is mounted, initilize all the data.
       _data.addAll([
         EnemyData(
-          image: gameRef.images.fromCache('AngryPig/Walk (36x30).png'),
+          image: game.images.fromCache('AngryPig/Walk (36x30).png'),
           nFrames: 16,
           stepTime: 0.1,
           textureSize: Vector2(36, 30),
@@ -67,7 +67,7 @@ class EnemyManager extends Component with HasGameRef<DinoRun> {
           canFly: false,
         ),
         EnemyData(
-          image: gameRef.images.fromCache('Bat/Flying (46x30).png'),
+          image: game.images.fromCache('Bat/Flying (46x30).png'),
           nFrames: 7,
           stepTime: 0.1,
           textureSize: Vector2(46, 30),
@@ -75,7 +75,7 @@ class EnemyManager extends Component with HasGameRef<DinoRun> {
           canFly: true,
         ),
         EnemyData(
-          image: gameRef.images.fromCache('Rino/Run (52x34).png'),
+          image: game.images.fromCache('Rino/Run (52x34).png'),
           nFrames: 6,
           stepTime: 0.09,
           textureSize: Vector2(52, 34),
@@ -95,7 +95,7 @@ class EnemyManager extends Component with HasGameRef<DinoRun> {
   }
 
   void removeAllEnemies() {
-    final enemies = gameRef.children.whereType<Enemy>();
+    final enemies = game.world.children.whereType<Enemy>();
     for (var enemy in enemies) {
       enemy.removeFromParent();
     }

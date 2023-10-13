@@ -14,14 +14,14 @@ class SettingsMenu extends StatelessWidget {
   static const id = 'SettingsMenu';
 
   // Reference to parent game.
-  final DinoRun gameRef;
+  final DinoRun game;
 
-  const SettingsMenu(this.gameRef, {Key? key}) : super(key: key);
+  const SettingsMenu(this.game, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
-      value: gameRef.settings,
+      value: game.settings,
       child: Center(
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
@@ -84,8 +84,8 @@ class SettingsMenu extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () {
-                        gameRef.overlays.remove(SettingsMenu.id);
-                        gameRef.overlays.add(MainMenu.id);
+                        game.overlays.remove(SettingsMenu.id);
+                        game.overlays.add(MainMenu.id);
                       },
                       child: const Icon(Icons.arrow_back_ios_rounded),
                     ),

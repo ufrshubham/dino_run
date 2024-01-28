@@ -16,7 +16,7 @@ class Hud extends StatelessWidget {
   // Reference to parent game.
   final DinoRun game;
 
-  const Hud(this.game, {Key? key}) : super(key: key);
+  const Hud(this.game, {super.key});
 
   @override
   Widget build(BuildContext context) {

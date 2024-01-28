@@ -14,7 +14,7 @@ class MainMenu extends StatelessWidget {
   // Reference to parent game.
   final DinoRun game;
 
-  const MainMenu(this.game, {Key? key}) : super(key: key);
+  const MainMenu(this.game, {super.key});
 
   @override
   Widget build(BuildContext context) {

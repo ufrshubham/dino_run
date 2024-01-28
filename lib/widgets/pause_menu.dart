@@ -17,7 +17,7 @@ class PauseMenu extends StatelessWidget {
   // Reference to parent game.
   final DinoRun game;
 
-  const PauseMenu(this.game, {Key? key}) : super(key: key);
+  const PauseMenu(this.game, {super.key});
 
   @override
   Widget build(BuildContext context) {

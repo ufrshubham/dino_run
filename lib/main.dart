@@ -63,10 +63,9 @@ class DinoRunApp extends StatelessWidget {
         body: GameWidget<DinoRun>.controlled(
           // This will dislpay a loading bar until [DinoRun] completes
           // its onLoad method.
-          loadingBuilder:
-              (conetxt) => const Center(
-                child: SizedBox(width: 200, child: LinearProgressIndicator()),
-              ),
+          loadingBuilder: (conetxt) => const Center(
+            child: SizedBox(width: 200, child: LinearProgressIndicator()),
+          ),
           // Register all the overlays that will be used by this game.
           overlayBuilderMap: {
             MainMenu.id: (_, game) => MainMenu(game),
@@ -77,15 +76,14 @@ class DinoRunApp extends StatelessWidget {
           },
           // By default MainMenu overlay will be active.
           initialActiveOverlays: const [MainMenu.id],
-          gameFactory:
-              () => DinoRun(
-                // Use a fixed resolution camera to avoid manually
-                // scaling and handling different screen sizes.
-                camera: CameraComponent.withFixedResolution(
-                  width: 360,
-                  height: 180,
-                ),
-              ),
+          gameFactory: () => DinoRun(
+            // Use a fixed resolution camera to avoid manually
+            // scaling and handling different screen sizes.
+            camera: CameraComponent.withFixedResolution(
+              width: 360,
+              height: 180,
+            ),
+          ),
         ),
       ),
     );

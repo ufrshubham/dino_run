@@ -64,7 +64,7 @@ class Dino extends SpriteAnimationGroupComponent<DinoAnimationStates>
   bool isHit = false;
 
   Dino(Image image, this.playerData)
-    : super.fromFrameData(image, _animationMap);
+      : super.fromFrameData(image, _animationMap);
 
   @override
   void onMount() {

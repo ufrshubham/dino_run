@@ -17,6 +17,7 @@ jobs:
         with:
           fetch-depth: 0
       - uses: subosito/flutter-action@v2
+      - run: flutter pub get
       - run: dart format --set-exit-if-changed .
       - run: flutter analyze .
       - run: flutter config --enable-windows-desktop

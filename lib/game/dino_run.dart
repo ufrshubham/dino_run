@@ -1,7 +1,6 @@
 import 'package:flame/events.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
-import 'package:flame/input.dart';
 import 'package:hive/hive.dart';
 import 'package:flame/parallax.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +16,7 @@ import '/widgets/pause_menu.dart';
 import '/widgets/game_over_menu.dart';
 
 // This is the main flame game class.
-class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
+class DinoRun extends FlameGame with TapCallbacks, HasCollisionDetection {
   DinoRun({super.camera});
 
   // List of all the image assets.
@@ -132,13 +131,13 @@ class DinoRun extends FlameGame with TapDetector, HasCollisionDetection {
 
   // This will get called for each tap on the screen.
   @override
-  void onTapDown(TapDownInfo info) {
+  void onTapDown(TapDownEvent event) {
     // Make dino jump only when game is playing.
     // When game is in playing state, only Hud will be the active overlay.
     if (overlays.isActive(Hud.id)) {
       _dino.jump();
     }
-    super.onTapDown(info);
+    super.onTapDown(event);
   }
 
   /// This method reads [PlayerData] from the hive box.

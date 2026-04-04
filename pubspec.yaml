@@ -9,14 +9,14 @@ environment:
   sdk: '>=3.3.4 <4.0.0'
 
 dependencies:
-  flame: 1.30.0
-  flame_audio: 2.11.7
+  flame: 1.36.0
+  flame_audio: 2.12.0
   hive: 2.2.3
   path_provider: 2.1.5
-  provider: 6.1.5
+  provider: 6.1.5+1
   flutter:
     sdk: flutter
-  cupertino_icons: 1.0.8
+  cupertino_icons: 1.0.9
 
 dev_dependencies:
   hive_generator: 2.0.1

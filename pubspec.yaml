@@ -17,6 +17,11 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: 1.0.9
+  # EduPlay educational ad-break SDK. Build-machine-local path dep because the
+  # package is not yet on pub.dev (Track J evaluation). Swap for a pub.dev
+  # version range once eduplay_ads publishes.
+  eduplay_ads:
+    path: /home/lloydho/eduplay/sdk/flutter
 
 dev_dependencies:
   hive_generator: 2.0.1

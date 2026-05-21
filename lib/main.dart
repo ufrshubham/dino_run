@@ -1,4 +1,5 @@
 import 'package:flame/camera.dart';
+import 'package:eduplay_ads/eduplay_ads.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:flame/game.dart';
@@ -22,6 +23,17 @@ Future<void> main() async {
 
   // Initializes hive and register the adapters.
   await initHive();
+
+  // Initialize the EduPlay educational ad-break SDK. Mock mode serves bundled
+  // canned questions from the hosted /break page — no live API or student
+  // token required for evaluation. Replace these values (and drop `mock`) with
+  // real ones from https://app.eduplay.com to ship.
+  await EduPlayAds.instance.initialize(
+    apiUrl: 'https://api.eduplay.com',
+    breakUrl: 'https://app.eduplay.com/break',
+    mock: true,
+  );
+
   runApp(const DinoRunApp());
 }
 
